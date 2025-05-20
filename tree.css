@@ -1,0 +1,239 @@
+:root {
+  --transition-timing-fast: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-timing-smooth: ease-out;
+  --background-color: #e6e6e6; /* Main page background */
+  --text-color: #111;
+  --text-color-secondary: #555;
+  --accent-color: #111; /* Used for icons, underlines - typically matches primary text or a brand color */
+  --border-color-light: rgba(0, 0, 0, 0.08); /* For subtle borders */
+  --card-background-color: #fff; /* Background for skill nodes */
+  --card-hover-background-color: #fdfdfd; /* Slightly off-white hover */
+  --section-padding-desktop: 60px 40px;
+  --section-padding-tablet: 50px 30px;
+  --section-padding-mobile: 40px 20px;
+}
+
+/* --- Skill Tree Specific Styles --- */
+.skill-tree-section {
+  background-color: var(
+    --background-color
+  ); /* Or specific section background if different */
+  padding: var(--section-padding-desktop);
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.skill-tree-title {
+  font-size: clamp(2rem, 5vw, 3rem); /* Responsive title size */
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 40px; /* Space below title */
+  text-align: left;
+  position: relative;
+}
+
+.skill-tree {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.skill-tree ul {
+  /* Sub-skills list */
+  list-style: none;
+  padding-left: 28px; /* Indentation for children - slightly increased */
+  margin-left: 12px; /* Align with parent node's connector point */
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s var(--transition-timing-fast); /* Slightly faster */
+}
+
+.skill-tree li {
+  position: relative;
+  /* Vertical padding between items, Left padding for connector line */
+  padding: 6px 0 6px 38px; /* Increased left padding for cleaner line start */
+}
+
+/* Connecting Lines - Ultra Clean */
+.skill-tree li::before,
+.skill-tree li::after {
+  content: "";
+  position: absolute;
+  left: 0; /* Start lines from the very left of the li */
+  border-color: var(--border-color-light); /* Light, subtle lines */
+}
+
+.skill-tree li::before {
+  /* Vertical line segment */
+  border-left: 1.5px solid var(--border-color-light);
+  height: 100%;
+  top: 0;
+  width: 0px; /* Ensures it's just a line */
+}
+
+.skill-tree li::after {
+  /* Horizontal line segment */
+  border-top: 1.5px solid var(--border-color-light);
+  height: 0px;
+  top: 23px; /* Precise vertical alignment with node center */
+  width: 22px; /* Length of horizontal connector */
+}
+
+/* Adjustments for first/last/single children for perfect line connections */
+.skill-tree > li:first-child::before,
+.skill-tree ul > li:first-child::before {
+  top: 23px; /* Start vertical line from node center */
+  height: calc(100% - 23px);
+}
+.skill-tree li:last-child::before {
+  height: 24px; /* Stop vertical line neatly at the node */
+}
+/* If an li is the only child in its ul, its vertical line should only connect to it */
+.skill-tree ul li:first-child:last-child::before {
+  top: 0; /* Start from top of li */
+  height: 24px; /* Connect only to this node */
+}
+.skill-tree > li:first-child:nth-last-child(1)::before, /* Single root node */
+      .skill-tree > li:first-child:nth-last-child(1)::after {
+  /* no lines needed */
+  display: none;
+}
+
+/* Skill Node Styling - Ultra Clean & Themed */
+.skill-node {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px; /* Generous padding for a premium feel */
+  background-color: var(--card-background-color);
+  border-radius: 8px; /* Slightly more pronounced radius */
+  border: 1px solid var(--border-color-light);
+  cursor: pointer;
+  transition: background-color 0.25s var(--transition-timing-smooth),
+    transform 0.25s var(--transition-timing-smooth),
+    box-shadow 0.25s var(--transition-timing-smooth);
+  position: relative;
+  will-change: background-color, transform, box-shadow;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03); /* Very subtle initial shadow */
+}
+
+.skill-node:hover {
+  background-color: var(--card-hover-background-color);
+  transform: translateY(-3px); /* More noticeable lift */
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.07); /* Enhanced shadow on hover */
+}
+
+.skill-node .icon {
+  margin-right: 16px; /* Space between icon and text */
+  font-size: 1.15em; /* Icon size */
+  color: var(--accent-color);
+  width: 24px; /* Fixed width for alignment */
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+.skill-node .icon i {
+  /* Ensure FA icons scale well */
+  line-height: 1;
+}
+
+.skill-node .skill-name {
+  font-weight: 500;
+  font-size: 1.05rem; /* Slightly larger for readability */
+  color: var(--text-color);
+  flex-grow: 1; /* Allow name to take available space */
+}
+
+.skill-node .expand-arrow {
+  margin-left: 16px; /* Space before arrow */
+  color: var(--text-color-secondary);
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.skill-node .expand-arrow svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  transition: transform 0.3s var(--transition-timing-smooth);
+}
+
+/* Expanded state */
+.skill-tree li.expanded > ul {
+  max-height: 2000px; /* Ample height for content */
+}
+.skill-tree li.expanded > .skill-node .expand-arrow svg {
+  transform: rotate(90deg);
+}
+
+/* Leaf node (no children) - hide arrow */
+.skill-tree li:not(:has(ul)) > .skill-node .expand-arrow {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* --- Responsive Design for Skill Tree --- */
+@media (max-width: 900px) {
+  /* Tablet */
+  .skill-tree-section {
+    padding: var(--section-padding-tablet);
+  }
+  .skill-tree-title {
+    margin-bottom: 35px;
+  }
+  .skill-node {
+    padding: 12px 18px;
+  }
+  .skill-node .skill-name {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Mobile */
+  .skill-tree-section {
+    padding: var(--section-padding-mobile);
+  }
+  .skill-tree-title {
+    font-size: clamp(1.7rem, 6vw, 2.2rem);
+    margin-bottom: 30px;
+  }
+  .skill-tree ul {
+    padding-left: 20px; /* Reduce indentation on mobile */
+    margin-left: 10px;
+  }
+  .skill-tree li {
+    padding-left: 30px; /* Reduce left padding for connector */
+  }
+  .skill-tree li::after {
+    /* Horizontal line segment */
+    width: 15px;
+  }
+  .skill-node {
+    padding: 12px 15px; /* Tighter padding on mobile */
+  }
+  .skill-node .icon {
+    margin-right: 12px;
+    font-size: 1.1em;
+  }
+  .skill-node .skill-name {
+    font-size: 0.95rem;
+  }
+  .skill-node .expand-arrow {
+    margin-left: 12px;
+  }
+  .detail-popup {
+    display: none;
+  }
+
+  /* On mobile, ensure hover still works if popup is above */
+  .skill-tree li:not(:has(ul)) > .skill-node:hover .detail-popup {
+    transform: translateX(-50%) translateY(calc(-100% - 12px));
+  }
+}

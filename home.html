@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Updated Title -->
+    <title>Monsur Rahman | Freelance Designer & Developer</title>
+    <!-- Link to Font Awesome CSS (Essential for icons) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Removed Mapbox CSS Link -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.15.0/mapbox-gl.css" rel="stylesheet"/> -->
+    <link rel="stylesheet" href="booking.css" />
+    <link rel="stylesheet" href="tree.css" />
+    <link rel="stylesheet" href="tool.css" />
+    <link rel="stylesheet" href="hardware.css" />
+    <link rel="stylesheet" href="contact.css" />
+    <style>
+      :root {
+        --transition-timing-fast: cubic-bezier(
+          0.25,
+          0.8,
+          0.25,
+          1
+        ); /* Faster, smoother ease-out */
+        --transition-timing-smooth: ease-out; /* Standard smooth ease */
+        --background-color: #e6e6e6;
+        --text-color: #111;
+        --section-padding: 100px 40px;
+        --container-max-width: 1200px;
+        --navbar-height: 80px; /* Define navbar height for scroll padding */
+        --text-color: #111; /* Dark theme text */
+        --text-color-secondary: #555; /* Grey for less emphasis */
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: var(
+          --navbar-height
+        ); /* Offset for fixed navbar based on its approx height */
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        line-height: 1.6;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      /* --- Navbar --- */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        /* FASTER & SMOOTHER Transition */
+        transition: background-color 0.35s var(--transition-timing-smooth),
+          padding 0.35s var(--transition-timing-smooth),
+          box-shadow 0.35s var(--transition-timing-smooth);
+        box-sizing: border-box;
+        opacity: 0;
+        transform: translateY(-20px);
+        animation: navFadeIn 0.8s var(--transition-timing-fast) forwards 1.2s;
+        will-change: background-color, padding, box-shadow, transform, opacity;
+      }
+
+      @keyframes navFadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(255, 255, 255, 0.98);
+        padding: 15px 40px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        position: relative;
+        transition: color 0.3s var(--transition-timing-smooth);
+        padding-bottom: 5px;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 1.5px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--text-color);
+        transition: width 0.35s var(--transition-timing-smooth);
+        will-change: width;
+      }
+
+      .nav-links a:hover {
+        color: #555;
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      .nav-links a.active {
+        font-weight: 600;
+      }
+
+      /* --- Preloader --- */
+      .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--background-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        /* Slightly faster fade out */
+        transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1),
+          visibility 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        will-change: opacity, visibility;
+      }
+
+      .preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--text-color);
+        animation: spin 1s ease-in-out infinite;
+        will-change: transform;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* --- Map Modal Styles Removed --- */
+      /* Removed .map-modal, .map-container, #map, .map-close styles */
+
+      /* --- Hero Section --- */
+      .container {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .hero {
+        position: relative;
+        width: 100%;
+        max-width: var(--container-max-width);
+        min-height: 100vh;
+        display: flex;
+        align-items: stretch; /* Ensure children stretch */
+      }
+
+      .profile-image {
+        position: relative;
+        width: 50%;
+        height: 100vh;
+        background-color: #f0f0f0;
+        overflow: hidden;
+      }
+
+      .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: scale(1.1);
+        /* Intro animation timing - kept */
+        transition: opacity 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s,
+          transform 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s;
+        will-change: transform, opacity;
+      }
+
+      .content {
+        position: relative; /* Needed for absolute positioning of badge */
+        width: 50%;
+        padding: 100px 5% 50px; /* Adjust padding */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      /* --- Location Badge (Visual Only) --- */
+      .location-badge {
+        position: absolute;
+        top: 100px; /* Fixed distance from top of content area */
+        left: 5%; /* Keep left alignment */
+        margin-bottom: 30px; /* Push Name down */
+        transform: translateX(-30px); /* Initial X transform for slide-in */
+        background-color: rgba(0, 0, 0, 0.9);
+        color: #f0f0f0;
+        padding: 10px 18px;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        opacity: 0;
+        z-index: 10; /* Above Name/Title */
+        /* Animation Timing - synced with Name/Title */
+        transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s,
+          transform 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s,
+          background-color 0.3s var(--transition-timing-smooth),
+          box-shadow 0.3s var(--transition-timing-smooth);
+        /* NO CURSOR POINTER as it's not clickable */
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        will-change: transform, opacity, background-color, box-shadow;
+      }
+
+      /* NO HOVER EFFECT NEEDED FOR NON-INTERACTIVE BADGE */
+      /* .location-badge:hover { ... } */
+
+      /* Apply loaded state transform */
+      .loaded .location-badge {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .location-badge .globe-icon {
+        width: 24px;
+        height: 24px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .location-badge .globe-icon svg {
+        width: 14px;
+        height: 14px;
+        stroke-width: 1.5;
+      }
+
+      .name {
+        font-size: clamp(3rem, 8vw, 6rem);
+        line-height: 1.1;
+        font-weight: 700;
+        margin-bottom: 15px;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s,
+          transform 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s;
+        will-change: transform, opacity;
+        z-index: 1; /* Below location badge */
+      }
+
+      .title {
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        line-height: 1.3;
+        font-weight: 400;
+        color: #555;
+        margin-bottom: 40px;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s,
+          transform 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s;
+        will-change: transform, opacity;
+        z-index: 1; /* Below location badge */
+      }
+
+      /* Loaded state animations */
+      .loaded .profile-image img {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .loaded .name {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .loaded .title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- Main Content Area --- */
+      main {
+        position: relative;
+        z-index: 1;
+        background-color: var(--background-color);
+      }
+
+      /* --- General Section Styling --- */
+      .content-section {
+        padding: var(--section-padding);
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .content-section:last-child {
+        border-bottom: none;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: 40px;
+        line-height: 1.2;
+      }
+
+      .section-subtitle {
+        font-size: clamp(1rem, 2vw, 1.3rem);
+        font-weight: 400;
+        color: #555;
+        max-width: 700px;
+        margin-bottom: 60px;
+      }
+
+      /* --- Bio Section (#bio) --- */
+      #bio p {
+        font-size: clamp(1rem, 1.8vw, 1.15rem);
+        max-width: 800px;
+        margin-bottom: 20px;
+      }
+      #bio strong {
+        font-weight: 600;
+      }
+
+      /* --- Services Section (#services) --- NEW --- */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1px; /* Thin lines */
+        background-color: rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .service-item {
+        background-color: var(--background-color);
+        padding: 40px 30px;
+        transition: background-color 0.3s var(--transition-timing-smooth);
+      }
+
+      .service-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .service-item svg {
+        /* Basic icon styling */
+        width: 40px;
+        height: 40px;
+        margin-bottom: 20px;
+        color: var(--text-color);
+        stroke-width: 1.5;
+      }
+
+      .service-item h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .service-item p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      /* --- Work Section (#work) --- */
+      .work-grid {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(280px, 1fr)
+        ); /* Responsive grid */
+        gap: 1px;
+        background-color: rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .work-item {
+        background-color: var(--background-color);
+        padding: 40px;
+        transition: background-color 0.3s var(--transition-timing-smooth);
+        text-decoration: none;
+        color: var(--text-color);
+        display: block;
+        position: relative;
+      }
+
+      .work-item:hover {
+        background-color: #f0f0f0; /* Slightly different hover */
+      }
+
+      .work-item h3 {
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        font-weight: 600;
+        margin-bottom: 10px;
+        transition: color 0.3s var(--transition-timing-smooth);
+      }
+
+      .work-item p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 20px;
+      }
+
+      .work-item .cta {
+        display: inline-block;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        padding-right: 25px;
+      }
+
+      .work-item .cta::after {
+        content: "→";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 0.3s var(--transition-timing-smooth),
+          right 0.3s var(--transition-timing-smooth);
+        will-change: opacity, right;
+      }
+
+      .work-item:hover .cta::after {
+        opacity: 1;
+        right: -5px;
+      }
+
+      /* --- Process Section (#process) --- NEW --- */
+      .process-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        counter-reset: process-counter; /* For step numbers */
+      }
+
+      .process-step {
+        flex: 1 1 250px; /* Grow, shrink, base width */
+        background-color: rgba(0, 0, 0, 0.02); /* Subtle background */
+        padding: 30px;
+        border-radius: 6px;
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        counter-increment: process-counter; /* Increment step number */
+        transition: transform 0.3s var(--transition-timing-smooth),
+          box-shadow 0.3s var(--transition-timing-smooth);
+        will-change: transform, box-shadow;
+      }
+
+      .process-step:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .process-step::before {
+        /* Step number */
+        content: "0" counter(process-counter);
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: rgba(0, 0, 0, 0.1);
+        line-height: 1;
+      }
+
+      .process-step h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        padding-right: 40px; /* Avoid overlapping number */
+      }
+
+      .process-step p {
+        font-size: 0.95rem;
+        color: #555;
+        line-height: 1.7;
+      }
+
+      /* --- Testimonials Section (#testimonials) --- NEW --- */
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .testimonial-item {
+        background-color: #fff; /* White background for contrast */
+        padding: 35px;
+        border-radius: 6px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .testimonial-item blockquote {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        font-style: italic;
+        color: #333;
+        border-left: 3px solid var(--text-color);
+        padding-left: 20px;
+      }
+
+      .testimonial-item cite {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-color);
+      }
+
+      .testimonial-item cite span {
+        display: block;
+        font-weight: 400;
+        font-size: 0.9rem;
+        color: #777;
+        margin-top: 3px;
+      }
+
+      /* --- Contact Section (#contact) --- */
+      .contact-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .contact-text {
+        flex-basis: 60%;
+        min-width: 300px;
+      }
+
+      .contact-info {
+        flex-basis: 35%;
+        min-width: 250px;
+      }
+
+      .contact-info p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .contact-info a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 3px;
+      }
+
+      .contact-info a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1.5px;
+        background-color: var(--text-color);
+        transition: width 0.35s var(--transition-timing-smooth);
+        will-change: width;
+      }
+
+      .contact-info a:hover::after {
+        width: 100%;
+      }
+
+      .social-links {
+        margin-top: 30px;
+        display: flex;
+        gap: 20px;
+      }
+
+      .social-links a {
+        color: #555;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s var(--transition-timing-smooth);
+      }
+      .social-links a:hover {
+        color: var(--text-color);
+      }
+
+      /* --- Footer --- */
+      .footer {
+        padding: 40px 40px 30px; /* More top padding */
+        text-align: center;
+        font-size: 0.9rem;
+        color: #777;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        margin-top: 60px; /* More space above footer */
+      }
+
+      /* --- Background Particles (Fixed) --- */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      /* --- Utility Classes --- */
+      /* --- SCROLL REVEAL - Kept as is --- */
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s var(--transition-timing-smooth),
+          transform 0.6s var(--transition-timing-smooth);
+        transition-delay: 0.1s; /* Optional: slight delay */
+        will-change: opacity, transform;
+      }
+
+      .scroll-reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- Responsive Design --- */
+      @media (max-width: 900px) {
+        :root {
+          --section-padding: 80px 30px;
+          --navbar-height: 70px;
+        }
+
+        html {
+          scroll-padding-top: var(--navbar-height);
+        }
+
+        /* Hero adjustments */
+        .hero {
+          flex-direction: column;
+          height: auto;
+          min-height: 100vh;
+        }
+        .profile-image,
+        .content {
+          width: 100%;
+        }
+        .profile-image {
+          height: 50vh;
+          order: 1;
+        }
+        .content {
+          min-height: 50vh;
+          order: 2;
+          padding: 80px 5% 40px;
+          height: auto;
+          justify-content: flex-start;
+        }
+        .name {
+          font-size: 12vw;
+          margin-top: 0;
+        }
+        .title {
+          font-size: 5vw;
+        }
+
+        /* Location Badge - MOBILE OVERLAP FIX */
+        .location-badge {
+          top: auto;
+          bottom: 40px;
+          left: 5%;
+          transform: translateX(-30px);
+          margin-bottom: 0;
+          font-size: 13px;
+          padding: 8px 14px;
+        }
+        .loaded .location-badge {
+          transform: translateX(0);
+        }
+
+        /* Content sections */
+        .section-title {
+          margin-bottom: 30px;
+        }
+        .section-subtitle {
+          margin-bottom: 40px;
+        }
+
+        /* Work grid - Adjusted for consistency */
+        .work-grid,
+        .services-grid {
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+          ); /* Adjust minmax for smaller screens */
+        }
+        .work-item,
+        .service-item {
+          padding: 30px;
+        }
+
+        /* Process Section Responsive */
+        .process-steps {
+          flex-direction: column;
+          gap: 20px;
+        } /* Stack steps */
+        .process-step {
+          flex-basis: auto;
+        } /* Let them take full width */
+
+        /* Testimonials Section Responsive */
+        .testimonial-grid {
+          grid-template-columns: 1fr; /* Stack testimonials */
+          gap: 20px;
+        }
+
+        /* Contact */
+        .contact-content {
+          flex-direction: column;
+          gap: 30px;
+        }
+        .contact-text,
+        .contact-info {
+          flex-basis: 100%;
+        }
+      }
+
+      @media (max-width: 600px) {
+        :root {
+          --section-padding: 60px 20px;
+          --navbar-height: 60px;
+        }
+
+        .navbar {
+          padding: 20px;
+        }
+        .navbar.scrolled {
+          padding: 10px 20px;
+        }
+        .nav-links {
+          gap: 20px;
+        }
+        .nav-links a {
+          font-size: 13px;
+        }
+
+        .name {
+          font-size: 14vw;
+        }
+        .title {
+          font-size: 6vw;
+        }
+
+        /* Location badge mobile adjustments */
+        .location-badge {
+          bottom: 30px;
+          padding: 7px 12px;
+          font-size: 12px;
+        }
+        .location-badge .globe-icon {
+          width: 20px;
+          height: 20px;
+        }
+        .location-badge .globe-icon svg {
+          width: 12px;
+          height: 12px;
+        }
+
+        /* Work/Services grid */
+        .work-grid,
+        .services-grid {
+          grid-template-columns: 1fr; /* Single column on smallest */
+          gap: 1px;
+        }
+        .work-item,
+        .service-item {
+          padding: 25px;
+        }
+        .work-item h3 {
+          font-size: 1.4rem;
+        }
+        .work-item p {
+          font-size: 0.95rem;
+        }
+        .service-item h3 {
+          font-size: 1.3rem;
+        }
+        .service-item p {
+          font-size: 0.95rem;
+        }
+
+        /* Process step mobile */
+        .process-step {
+          padding: 25px;
+        }
+        .process-step::before {
+          font-size: 1.6rem;
+          top: 20px;
+          right: 20px;
+        }
+        .process-step h3 {
+          font-size: 1.2rem;
+        }
+
+        /* Testimonial mobile */
+        .testimonial-item {
+          padding: 30px;
+        }
+        .testimonial-item blockquote {
+          font-size: 1rem;
+        }
+        .testimonial-item cite {
+          font-size: 0.9rem;
+        }
+
+        .footer {
+          padding: 30px 20px 20px;
+          font-size: 0.8rem;
+        }
+
+        /* Removed Map Modal Close Button styles */
+      }
+      /* --- Responsive Adjustments --- */
+      @media (max-width: 900px) {
+        .location-text {
+          font-size: clamp(0.85rem, 2.5vw, 1rem);
+          margin-bottom: 30px;
+        }
+        .tagline {
+          font-size: clamp(1.1rem, 4vw, 1.4rem);
+          margin-bottom: 15px;
+        }
+        .divider {
+          width: 50px;
+          margin-bottom: 15px;
+        }
+        .description {
+          font-size: clamp(0.95rem, 3.5vw, 1.05rem);
+          line-height: 1.6;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .tagline {
+          font-size: clamp(1rem, 5vw, 1.3rem);
+        }
+        .description {
+          font-size: clamp(0.9rem, 4vw, 1rem);
+        }
+      }
+      .location-text {
+        font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+        color: var(--text-color-secondary);
+        margin-bottom: 40px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 1.2s,
+          transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 1.2s;
+        will-change: transform, opacity;
+        z-index: 1;
+      }
+
+      .tagline {
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+        font-weight: 400;
+        color: var(--text-color);
+        max-width: 500px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        z-index: 1;
+      }
+
+      .divider {
+        display: block;
+        width: 60px;
+        height: 2px;
+        background-color: var(--accent-color); /* Accent color here */
+        margin-bottom: 20px;
+        z-index: 1;
+      }
+
+      .description {
+        font-size: clamp(1rem, 1.8vw, 1.1rem);
+        color: var(--text-color-secondary); /* Less emphasis */
+        max-width: 500px;
+        line-height: 1.7;
+        z-index: 1;
+      }
+      /* --- Button Styles (Add/Ensure these are in your main CSS) --- */
+      .btn {
+        display: inline-flex; /* Use inline-flex for icon alignment */
+        align-items: center; /* Vertically center text and icon */
+        gap: 8px; /* Space between text and icon */
+        padding: 12px 28px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s var(--transition-timing-smooth),
+          color 0.3s var(--transition-timing-smooth),
+          transform 0.3s var(--transition-timing-smooth),
+          box-shadow 0.3s var(--transition-timing-smooth);
+        cursor: pointer;
+        border: none; /* Assuming solid background buttons */
+        text-align: center;
+        will-change: background-color, color, transform, box-shadow;
+      }
+
+      .btn-primary {
+        background-color: var(
+          --text-color
+        ); /* Use main text color for background */
+        color: var(--background-color); /* Use main background color for text */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-primary:hover {
+        background-color: #333; /* Darken the background on hover */
+        color: #fff; /* Ensure text stays light */
+        transform: translateY(-2px); /* Slight lift effect */
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Icon hover effect */
+      .btn-primary:hover svg {
+        transform: translate(2px, -2px); /* Move icon slightly up and right */
+      }
+
+      /* Container for the button (optional adjustments) */
+      .resume-button-container {
+        /* text-align: left; /* Override inline style if needed */
+        /* margin-top: 40px; /* Adjust spacing */
+      }
+
+      /* Ensure scroll-reveal utility class exists if you use it */
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s var(--transition-timing-smooth),
+          transform 0.6s var(--transition-timing-smooth);
+        transition-delay: 0.1s;
+        will-change: opacity, transform;
+      }
+
+      .scroll-reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* --- Availability Status Styles --- */
+      #availability-status-container {
+        position: absolute; /* Position relative to portfolio-text-panel */
+        bottom: 30px; /* Place it where cursor was, adjust as needed */
+        left: 40px; /* Adjust as needed */
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none; /* Prevents text selection on click */
+        z-index: 10;
+      }
+
+      #status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 10px;
+        transition: background-color 0.5s ease;
+        position: relative; /* For the pulse animation */
+      }
+
+      #status-dot.online {
+        background-color: #2ecc71; /* Green for online */
+      }
+      #status-dot.online::before {
+        /* Pulsing effect for online */
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background-color: #2ecc71;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: pulse 2s infinite ease-out;
+        z-index: -1; /* Behind the main dot */
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.6;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(2.5);
+          opacity: 0;
+        }
+      }
+
+      #status-dot.offline {
+        background-color: #e74c3c; /* Red for offline */
+      }
+      #status-dot.offline::before {
+        /* No pulse for offline */
+        animation: none;
+        display: none;
+      }
+
+      #status-text {
+        font-size: 0.95em;
+        font-weight: 500;
+        color: #333;
+      }
+
+      #status-popup {
+        position: absolute;
+        bottom: calc(100% + 12px); /* Position above the status indicator */
+        left: 150%;
+        transform: translateX(-50%) translateY(10px); /* Initial position for animation */
+        background-color: #11111180; /* Darker, sophisticated background */
+        color: #ecf0f1; /* Light text for contrast */
+        padding: 12px 18px;
+        border-radius: 6px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        font-size: 0.9em;
+        white-space: nowrap; /* Prevent text wrapping */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease,
+          transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), visibility 0.3s;
+        z-index: 20; /* Ensure it's above other elements */
+      }
+
+      #status-popup::after {
+        /* Triangle/caret for the popup */
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 14%;
+        transform: translateX(-50%);
+        border-width: 7px;
+        border-style: solid;
+        border-color: #11111180 transparent transparent transparent;
+      }
+
+      /* Show popup on hover or when .active class is present (for click) */
+      #availability-status-container:hover #status-popup,
+      #availability-status-container.active #status-popup {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+      /* --- CSS ONLY for Work Item Images & Their Containers --- */
+
+      .work-item-image-container {
+        width: 100%;
+
+        height: 220px; /* Defaulting to fixed height, change if you prefer aspect-ratio */
+        overflow: hidden; /* Crucial: Prevents image from overflowing its container */
+        position: relative; /* Necessary for positioning the .work-item-overlay absolutely */
+        background-color: #e9ecef; /* A light placeholder background color if image fails to load or for 'contain' object-fit */
+        border-radius: 3px 3px 0 0; /* Optional: if your cards have rounded corners and image is at the top */
+        /* If image is not at the very top, you might not need this. */
+      }
+
+      .work-item-image-container img {
+        width: 100%;
+        height: 100%;
+        display: block; /* Removes any extra space below the image */
+        /*
+            Choose ONE for how the image fits:
+            1. Cover (fills the container, might crop image):
+               object-fit: cover;
+            2. Contain (shows the whole image, might leave empty space if aspect ratios differ):
+               object-fit: contain;
+          */
+        object-fit: cover; /* Defaulting to cover, often looks best for previews */
+        transition: transform 0.4s var(--transition-timing-smooth, ease-out),
+          /* Using your variable if defined */ opacity 0.4s ease; /* For any potential opacity changes */
+        will-change: transform; /* Hint for browser performance */
+      }
+
+      /* Optional: Zoom effect on the image when the PARENT .work-item is hovered */
+      /* This requires .work-item:hover to be defined elsewhere for transform/shadow */
+      .work-item:hover .work-item-image-container img {
+        transform: scale(1.05); /* Subtle zoom-in effect */
+      }
+
+      /* --- Optional: Image Overlay for Hover Effects --- */
+      .work-item-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          20,
+          20,
+          30,
+          0.3
+        ); /* Example: A subtle dark tint */
+        /* Or use a gradient:
+          background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%); */
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.3s var(--transition-timing-smooth, ease-out);
+        display: flex; /* If you want to center content within the overlay */
+        align-items: center;
+        justify-content: center;
+        pointer-events: none; /* Allows clicks to pass through to the link unless overlay has interactive elements */
+      }
+
+      .work-item:hover .work-item-overlay {
+        opacity: 1; /* Show overlay on parent .work-item hover */
+        pointer-events: auto; /* Make it interactive if it has content */
+      }
+
+      /* Example: If you wanted to add an icon inside the overlay */
+      /*
+      .work-item-overlay .overlay-icon {
+          color: white;
+          font-size: 2rem;
+          opacity: 0;
+          transform: scale(0.8);
+          transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+      }
+      .work-item:hover .work-item-overlay .overlay-icon {
+          opacity: 1;
+          transform: scale(1);
+      }
+      */
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-links left-links">
+        <!-- Added Services link -->
+        <a href="#bio" class="nav-link">BIO</a>
+        <a href="#services" class="nav-link">SERVICES</a>
+        <a href="#work" class="nav-link">WORK</a>
+        <!-- Optionally add #process if desired -->
+        <!-- <a href="#process" class="nav-link">PROCESS</a> -->
+      </div>
+      <div class="nav-links right-links">
+        <a href="mailto:monsurrahman671@gmail.com" class="nav-link">CONTACT</a>
+      </div>
+    </nav>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Hero Section Container -->
+    <div class="container">
+      <div class="particles" id="particles"></div>
+      <div class="hero">
+        <div class="profile-image">
+          <!-- Ensure image path is correct or use a placeholder -->
+          <img src="asset/main.jpeg" alt="Monsur Rahman Portrait" />
+          <div id="availability-status-container" tabindex="0">
+            <!-- tabindex for keyboard focus -->
+            <span id="status-dot"></span>
+            <span id="status-text">Loading...</span>
+            <div id="status-popup">
+              <!-- Content will be set by JavaScript -->
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <!-- Updated Name -->
+          <!-- <h1 class="name">Monsur Rahman</h1> -->
+          <h2 class="title">Freelance<br />Designer & Developer</h2>
+          <p class="location-text">Based in Bangladesh</p>
+
+          <p class="tagline scroll-reveal-hero">
+            My approach to building the digital experiences of tomorrow.
+          </p>
+          <span class="divider scroll-reveal-hero"></span>
+          <p class="description scroll-reveal-hero">
+            Passionate about blending aesthetic design with robust development
+            to build unique, user-centric, and effective solutions.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Bio Section -->
+      <section id="bio" class="content-section scroll-reveal">
+        <h2 class="section-title">Digital Craftsmanship</h2>
+        <p class="section-subtitle">
+          I blend creative design thinking with technical development expertise
+          to craft unique, engaging, and effective digital experiences. My focus
+          is always on clean aesthetics, intuitive user interfaces, and robust,
+          performant code.
+        </p>
+        <p>
+          With a passion for problem-solving and a keen eye for detail, I've
+          collaborated with diverse clients, from innovative startups to
+          established brands, helping them launch successful websites, web
+          applications, and digital products. I thrive on collaboration and
+          believe the best results stem from a shared vision and a deep
+          understanding of user needs.
+        </p>
+        <p>
+          I'm dedicated to translating complex ideas into simple, elegant, and
+          user-friendly solutions that not only look great but also achieve
+          tangible business goals.
+        </p>
+      </section>
+
+      <!-- Services Section --- NEW --- -->
+      <section id="services" class="content-section scroll-reveal">
+        <h2 class="section-title">What I Offer</h2>
+        <p class="section-subtitle">
+          A range of services designed to bring your digital vision to life,
+          from initial concept to final launch and beyond.
+        </p>
+
+        <div class="services-grid">
+          <div class="service-item scroll-reveal">
+            <!-- Simple SVG icon (Feather Icons example: layout) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            <h3>UI/UX Design</h3>
+            <p>
+              Crafting intuitive, user-centered interfaces that are both
+              beautiful and highly functional, focusing on usability and
+              engagement.
+            </p>
+          </div>
+          <div class="service-item scroll-reveal">
+            <!-- Simple SVG icon (Feather Icons example: code) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <h3>Front-End Development</h3>
+            <p>
+              Building responsive, interactive, and pixel-perfect websites and
+              applications using modern technologies like HTML, CSS, JavaScript
+              (React, Vue).
+            </p>
+          </div>
+          <div class="service-item scroll-reveal">
+            <!-- Simple SVG icon (Feather Icons example: server) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+              <line x1="6" y1="6" x2="6.01" y2="6"></line>
+              <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+            <h3>Back-End Development</h3>
+            <p>
+              Developing robust server-side logic, databases, and APIs to power
+              dynamic web applications (Node.js, Express, Databases).
+            </p>
+          </div>
+          <div class="service-item scroll-reveal">
+            <!-- Simple SVG icon (Feather Icons example: pen-tool) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+              <path d="M2 2l7.586 7.586"></path>
+              <circle cx="11" cy="11" r="2"></circle>
+            </svg>
+            <h3>Brand Identity</h3>
+            <p>
+              Creating cohesive visual identities, including logos, color
+              palettes, and typography, that resonate with your target audience.
+            </p>
+          </div>
+          <div class="service-item scroll-reveal">
+            <!-- Simple SVG icon (Feather Icons example: globe) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path
+                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+              ></path>
+            </svg>
+            <h3>Webflow Development</h3>
+            <p>
+              Designing and building high-quality, custom websites efficiently
+              using the Webflow platform for easy content management.
+            </p>
+          </div>
+          <div class="service-item scroll-reveal">
+            <!-- Simple SVG icon (Feather Icons example: settings) -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+              ></path>
+            </svg>
+            <h3>Consulting & Strategy</h3>
+            <p>
+              Providing expert advice on digital strategy, technology choices,
+              and user experience optimization to help you make informed
+              decisions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Work Section -->
+      <section id="work" class="content-section scroll-reveal">
+        <!-- SCROLL-REVEAL RE-ADDED HERE -->
+        <h2 class="section-title scroll-reveal">Selected Projects</h2>
+        <!-- Assuming you want this to reveal too -->
+        <p class="section-subtitle scroll-reveal">
+          <!-- Assuming you want this to reveal too -->
+          A glimpse into recent collaborations where design and development
+          converged to create impactful digital solutions.
+        </p>
+
+        <div class="work-grid">
+          <!-- Project 1 -->
+          <a
+            href="http://Podcastr-23zf.vercel.app/"
+            class="work-item scroll-reveal"
+          >
+            <!-- scroll-reveal was already here -->
+            <div class="work-item-image-container">
+              <img
+                src="asset/aisaas.jpg"
+                alt="Podcastr - AI Podcast Platform"
+              />
+              <div class="work-item-overlay"></div>
+            </div>
+            <div class="work-item-content">
+              <h3>Podcastr - AI Podcast Platform</h3>
+              <p>Web Application Design & Development</p>
+              <span class="cta">View Project</span>
+            </div>
+          </a>
+
+          <!-- Project 2 -->
+          <a
+            href="https://figma-clone-cyan.vercel.app/"
+            class="work-item scroll-reveal"
+          >
+            <!-- scroll-reveal was already here -->
+            <div class="work-item-image-container">
+              <img src="asset/figma.jpg" alt="Square - E-commerce Store" />
+              <div class="work-item-overlay"></div>
+            </div>
+            <div class="work-item-content">
+              <h3>FigPro - Figma Clone</h3>
+              <p>
+                UI Design Platform Web Application Development (Next.js,
+                TypeScript, Canvas API)
+              </p>
+              <span class="cta">View Project</span>
+            </div>
+          </a>
+
+          <!-- Project 3 -->
+          <a
+            href="http://live-docs-mj.vercel.app/"
+            class="work-item scroll-reveal"
+          >
+            <!-- scroll-reveal was already here -->
+            <div class="work-item-image-container">
+              <img
+                src="asset/google.jpg"
+                alt="Livedoc - Real-Time Google Docs Clone"
+              />
+              <div class="work-item-overlay"></div>
+            </div>
+            <div class="work-item-content">
+              <h3>Livedoc - Real-Time Google Docs Clone</h3>
+              <p>UI/UX Design & Full-Stack Implementation (React)</p>
+              <span class="cta">View Project</span>
+            </div>
+          </a>
+
+          <!-- Project 4 -->
+          <a
+            href="http://care-pulse-lemon.vercel.app/"
+            class="work-item scroll-reveal"
+          >
+            <!-- scroll-reveal was already here -->
+            <div class="work-item-image-container">
+              <img
+                src="asset/healthcare.jpg"
+                alt="CarePulse - Health Management System"
+              />
+              <div class="work-item-overlay"></div>
+            </div>
+            <div class="work-item-content">
+              <h3>CarePulse - Health Management System</h3>
+              <p>Redesign & Accessibility Optimization</p>
+              <span class="cta">View Project</span>
+            </div>
+          </a>
+          <!-- Add more projects following this structure -->
+        </div>
+      </section>
+
+      <!-- Process Section --- NEW --- -->
+      <section id="process" class="content-section scroll-reveal">
+        <h2 class="section-title">My Approach</h2>
+        <p class="section-subtitle">
+          A collaborative and iterative process focused on understanding your
+          needs and delivering exceptional results efficiently.
+        </p>
+        <div class="process-steps">
+          <div class="process-step scroll-reveal">
+            <h3>1. Discovery & Strategy</h3>
+            <p>
+              We start by diving deep into your goals, target audience, and
+              project requirements. Understanding the 'why' is crucial for
+              success.
+            </p>
+          </div>
+          <div class="process-step scroll-reveal">
+            <h3>2. Design & Prototyping</h3>
+            <p>
+              Translating insights into visual concepts. I create wireframes,
+              mockups, and interactive prototypes to visualize the user
+              experience.
+            </p>
+          </div>
+          <div class="process-step scroll-reveal">
+            <h3>3. Development & Build</h3>
+            <p>
+              Bringing the designs to life with clean, efficient code. I focus
+              on performance, responsiveness, and maintainability throughout the
+              build.
+            </p>
+          </div>
+          <div class="process-step scroll-reveal">
+            <h3>4. Testing & Refinement</h3>
+            <p>
+              Rigorous testing across devices and browsers ensures quality.
+              Feedback is gathered and implemented to refine the final product.
+            </p>
+          </div>
+          <div class="process-step scroll-reveal">
+            <h3>5. Launch & Support</h3>
+            <p>
+              Deploying the project smoothly and providing ongoing support or
+              handover documentation as needed for long-term success.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="skill-tree-section">
+        <h2 class="skill-tree-title">My Technical Expertise</h2>
+        <ul class="skill-tree">
+          <li class="expanded">
+            <div class="skill-node">
+              <span class="icon"><i class="fas fa-palette"></i></span>
+              <span class="skill-name">UI/UX Design</span>
+              <span class="expand-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                  <path
+                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <ul>
+              <li>
+                <div class="skill-node">
+                  <span class="icon"><i class="fab fa-figma"></i></span>
+                  <span class="skill-name">Figma</span>
+                  <div class="detail-popup">Wireframes, Prototypes, Hi-Fi</div>
+                </div>
+              </li>
+              <li>
+                <div class="skill-node">
+                  <span class="icon"><i class="fas fa-users-cog"></i></span>
+                  <!-- Changed from users-gear for better fit -->
+                  <span class="skill-name">User Research & Testing</span>
+                  <div class="detail-popup">
+                    Personas, Journey Maps, Usability
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li class="expanded">
+            <div class="skill-node">
+              <span class="icon"><i class="fas fa-code"></i></span>
+              <span class="skill-name">Front-End Development</span>
+              <span class="expand-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                  <path
+                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <ul>
+              <li>
+                <div class="skill-node">
+                  <span class="icon"><i class="fab fa-html5"></i></span
+                  ><span class="skill-name">HTML5</span>
+                  <div class="detail-popup">Semantic, Accessible Markup</div>
+                </div>
+              </li>
+              <li>
+                <div class="skill-node">
+                  <span class="icon"><i class="fab fa-css3-alt"></i></span
+                  ><span class="skill-name">CSS3 / SCSS</span>
+                  <div class="detail-popup">Responsive, Animations, BEM</div>
+                </div>
+              </li>
+              <li>
+                <div class="skill-node">
+                  <span class="icon"><i class="fab fa-js-square"></i></span
+                  ><span class="skill-name">JavaScript (ESNext)</span>
+
+                  <span class="expand-arrow"
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512"
+                    >
+                      <path
+                        d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="skill-node">
+                      <span class="icon"><i class="fab fa-react"></i></span
+                      ><span class="skill-name">React.js</span>
+                      <div class="detail-popup">Components, Hooks, State</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="skill-node">
+                      <span class="icon"><i class="fab fa-vuejs"></i></span
+                      ><span class="skill-name">Vue.js</span>
+                      <div class="detail-popup">Vue 3, Composition, Pinia</div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="skill-node">
+              <span class="icon"><i class="fas fa-server"></i></span
+              ><span class="skill-name">Back-End Development</span>
+
+              <span class="expand-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                  <path
+                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <ul>
+              <li>
+                <div class="skill-node">
+                  <span class="icon"><i class="fab fa-node-js"></i></span
+                  ><span class="skill-name">Node.js / Express.js</span>
+                  <div class="detail-popup">REST APIs, Middleware</div>
+                </div>
+              </li>
+              <li>
+                <div class="skill-node">
+                  <span class="icon"><i class="fas fa-database"></i></span
+                  ><span class="skill-name">Databases</span>
+                  <div class="detail-popup">SQL & NoSQL</div>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="skill-node">
+              <span class="icon"><i class="fas fa-globe"></i></span
+              ><span class="skill-name">Webflow Development</span>
+              <div class="detail-popup">CMS Sites, Interactions</div>
+            </div>
+          </li>
+          <li>
+            <div class="skill-node">
+              <span class="icon"><i class="fas fa-lightbulb"></i></span
+              ><span class="skill-name">Brand Identity & Strategy</span>
+              <div class="detail-popup">Logos, Style Guides</div>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section class="tech-stack-section">
+        <h2 class="section-title">My Curated Tech Stack</h2>
+        <p class="section-subtitle">
+          A collection of the primary tools, hardware, and software I rely on
+          daily to design, develop, and stay productive. Each one is chosen for
+          its efficiency and the joy it brings to my workflow.
+        </p>
+
+        <div class="tool-category">
+          <h3 class="tool-category-title">
+            <span class="fa-icon"><i class="fas fa-paint-brush"></i></span
+            >Design & Prototyping
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card" data-tool="figma">
+              <div class="tool-card-header">
+                <div class="tool-card-logo">
+                  <img src="icons/figma-1.png" alt="Figma Logo" />
+                </div>
+                <div class="tool-card-info">
+                  <h4>Figma</h4>
+                  <p>UI/UX Design, Collaboration</p>
+                </div>
+              </div>
+            </div>
+            <div class="tool-card" data-tool="photoshop">
+              <div class="tool-card-header">
+                <div class="tool-card-logo">
+                  <img
+                    src="icons/adobe-photoshop-svgrepo-com.svg"
+                    alt="Photoshop Logo"
+                  />
+                </div>
+                <div class="tool-card-info">
+                  <h4>Adobe Photoshop</h4>
+                  <p>Image Editing, Graphics</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-category">
+          <h3 class="tool-category-title">
+            <span class="fa-icon"><i class="fas fa-laptop-code"></i></span
+            >Development Environment
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card" data-tool="vscode">
+              <div class="tool-card-header">
+                <div class="tool-card-logo">
+                  <img
+                    src="icons/vs-code-logo-microsoft-svgrepo-com.svg"
+                    alt="VS Code Logo"
+                  />
+                </div>
+                <div class="tool-card-info">
+                  <h4>VS Code</h4>
+                  <p>Code Editor</p>
+                </div>
+              </div>
+            </div>
+            <div class="tool-card" data-tool="github">
+              <div class="tool-card-header">
+                <div class="tool-card-logo">
+                  <img
+                    src="icons/github-icon-svgrepo-com.svg"
+                    alt="GitHub Logo"
+                  />
+                </div>
+                <div class="tool-card-info">
+                  <h4>GitHub</h4>
+                  <p>Version Control, Hosting</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-category">
+          <h3 class="tool-category-title">
+            <span class="fa-icon"><i class="fas fa-cogs"></i></span>Productivity
+            & Utilities
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card" data-tool="notion">
+              <div class="tool-card-header">
+                <div class="tool-card-logo">
+                  <img
+                    src="icons/notion-logo-svgrepo-com.svg"
+                    alt="Notion Logo"
+                  />
+                </div>
+                <div class="tool-card-info">
+                  <h4>Notion</h4>
+                  <p>Workspace & Organization</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tool Modal -->
+      <div class="tool-modal-overlay" id="toolModalOverlay">
+        <div class="tool-modal" id="toolModal">
+          <button
+            class="tool-modal-close"
+            id="toolModalClose"
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+          <div class="tool-modal-content-wrapper">
+            <div class="tool-modal-header">
+              <div class="tool-modal-logo" id="modalToolLogoContainer">
+                <img src="" alt="Tool Logo" id="modalToolLogo" />
+              </div>
+              <div class="tool-modal-title-group">
+                <h3 id="modalToolName">Tool Name</h3>
+                <p id="modalToolType">Tool Type</p>
+              </div>
+            </div>
+            <div class="tool-modal-body">
+              <p id="modalToolDescription">My thoughts on this tool...</p>
+            </div>
+          </div>
+          <div class="tool-modal-footer">
+            <a
+              href="#"
+              id="modalToolLink"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="tool-modal-link"
+            >
+              Visit Website <i class="fas fa-external-link-alt fa-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <section class="content-section">
+        <div class="hardware-setup-category tool-category">
+          <h3 class="tool-category-title">
+            <span class="fa-icon"><i class="fas fa-desktop"></i></span>My
+            Hardware Arsenal
+          </h3>
+          <p class="category-description">
+            The physical tools that form the backbone of my productivity.
+            Precision, power, and comfort are paramount.
+          </p>
+          <div class="hardware-grid tools-grid">
+            <div class="tool-card hardware-card-refined" data-tool="macbookpro">
+              <div class="image-container">
+                <img
+                  src="asset/mac.jpeg"
+                  alt="MacBook Pro"
+                  class="hardware-image"
+                />
+                <div class="hardware-shine-overlay"></div>
+              </div>
+              <div class="info-container">
+                <h4>MacBook Pro (M-Series)</h4>
+                <p>Primary Workstation</p>
+              </div>
+            </div>
+            <div
+              class="tool-card hardware-card-refined"
+              data-tool="dellmonitor"
+            >
+              <div class="image-container">
+                <img
+                  src="asset/images-32.jpeg"
+                  alt="Dell Ultrasharp Monitor"
+                  class="hardware-image"
+                />
+                <div class="hardware-shine-overlay"></div>
+              </div>
+              <div class="info-container">
+                <h4>Dell Ultrasharp U2723QE</h4>
+                <p>Main Display (4K IPS Black)</p>
+              </div>
+            </div>
+            <div class="tool-card hardware-card-refined" data-tool="keychronq1">
+              <div class="image-container">
+                <img
+                  src="asset/keyboard.jpeg"
+                  alt="Keychron Q1 Keyboard"
+                  class="hardware-image"
+                />
+                <div class="hardware-shine-overlay"></div>
+              </div>
+              <div class="info-container">
+                <h4>Keychron Q1 Pro</h4>
+                <p>Mechanical Keyboard</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Tool Modal (HTML structure remains the same as the liked version) -->
+      <div class="tool-modal-overlay" id="toolModalOverlay">
+        <div class="tool-modal" id="toolModal">
+          <button
+            class="tool-modal-close"
+            id="toolModalClose"
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+          <div class="tool-modal-content-wrapper">
+            <div class="tool-modal-header">
+              <div class="tool-modal-logo" id="modalToolLogoContainer">
+                <img src="" alt="Tool Logo" id="modalToolLogo" />
+              </div>
+              <div class="tool-modal-title-group">
+                <h3 id="modalToolName">Tool Name</h3>
+                <p id="modalToolType">Tool Type</p>
+              </div>
+            </div>
+            <div class="tool-modal-body">
+              <p id="modalToolDescription">My thoughts on this tool...</p>
+              <div id="modalToolSpecs"></div>
+            </div>
+          </div>
+          <div class="tool-modal-footer">
+            <a
+              href="#"
+              id="modalToolLink"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="tool-modal-link"
+            >
+              Visit Website <i class="fas fa-external-link-alt fa-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonials Section --- NEW --- -->
+      <section id="testimonials" class="content-section scroll-reveal">
+        <h2 class="section-title">Client Feedback</h2>
+        <p class="section-subtitle">
+          Don't just take my word for it. Here's what some of my clients have to
+          say about our collaboration.
+        </p>
+        <div class="testimonial-grid">
+          <div class="testimonial-item scroll-reveal">
+            <blockquote>
+              "Working with Monsur was a fantastic experience. He understood our
+              vision perfectly and delivered a website that exceeded our
+              expectations. His attention to detail is remarkable."
+            </blockquote>
+            <cite>Ayesha Khan<span>CEO, Tech Innovate Ltd.</span></cite>
+          </div>
+          <div class="testimonial-item scroll-reveal">
+            <blockquote>
+              "Monsur is not only a talented designer but also a skilled
+              developer. He transformed our complex requirements into an
+              intuitive and elegant user interface. Highly recommended!"
+            </blockquote>
+            <cite
+              >David Chen<span
+                >Product Manager, Creative Solutions Inc.</span
+              ></cite
+            >
+          </div>
+          <div class="testimonial-item scroll-reveal">
+            <blockquote>
+              "The collaborative process was seamless. Monsur provided valuable
+              insights and was always responsive to feedback. The final product
+              has significantly improved our user engagement."
+            </blockquote>
+            <cite
+              >Fatima Ahmed<span>Marketing Director, Global Connect</span></cite
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="content-section scroll-reveal">
+        <h2 class="section-title">Let's Collaborate</h2>
+
+        <div class="contact-content">
+          <div class="contact-text">
+            <p class="section-subtitle" style="margin-bottom: 20px">
+              Have an interesting project, a challenging idea, or just want to
+              connect? I'm always open to discussing new opportunities. Feel
+              free to reach out.
+            </p>
+            <p>
+              Whether you need a complete digital product overhaul, a stunning
+              new website, help refining your user experience, or technical
+              expertise, I'm here to help you achieve your goals.
+            </p>
+          </div>
+          <div class="contact-info">
+            <!-- Updated Email -->
+            <p>
+              <a href="mailto:monsurrahman671@gmail.com"
+                >hello@monsurrahman.dev</a
+              >
+            </p>
+            <!-- Updated Location -->
+            <p>Based in Bangladesh</p>
+            <section class="booking-section">
+              <h2 class="booking-title">Schedule a Consultation</h2>
+              <div class="status-message">
+                <strong>Currently available</strong> for new project
+                discussions. Select a date and time below to book a 15-minute
+                introductory call.
+              </div>
+
+              <div class="calendar-container">
+                <div class="calendar-header">
+                  <span class="calendar-month-year" id="month-year"></span>
+                  <div class="calendar-nav">
+                    <button id="prev-month" aria-label="Previous month">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                    </button>
+                    <button id="next-month" aria-label="Next month">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="calendar-grid" id="calendar-grid">
+                  <!-- Day headers generated by JS -->
+                  <!-- Dates generated by JS -->
+                </div>
+              </div>
+
+              <div
+                class="time-slots-container"
+                id="time-slots-section"
+                style="display: none"
+              >
+                <!-- Hidden initially -->
+                <div class="time-slots-header">
+                  <span
+                    class="selected-date-display"
+                    id="selected-date-display"
+                  ></span>
+                  <div class="time-format-toggle">
+                    <button id="toggle-12h" class="active">12h</button>
+                    <button id="toggle-24h">24h</button>
+                  </div>
+                </div>
+                <div class="time-slots-list" id="time-slots-list">
+                  <!-- Time slots generated by JS -->
+                </div>
+              </div>
+            </section>
+            <!-- Contact Section (Message Me) -->
+            <section
+              id="portfolioContactSection"
+              class="content-section-wrapper"
+            >
+              <!-- Using generic wrapper CLASS for layout -->
+              <h2 class="section-title-global scroll-reveal">Contact Form</h2>
+              <!-- Title Changed, NO underline via CSS -->
+              <p class="section-subtitle-global scroll-reveal">
+                Have a project in mind or just want to connect? Fill out the
+                form below, and I'll get back to you promptly.
+              </p>
+
+              <form id="contactForm" class="contact-form-unique scroll-reveal">
+                <div class="form-grid-unique">
+                  <div class="form-group-unique">
+                    <label for="contactName" class="form-label-unique"
+                      >Full Name</label
+                    >
+                    <input
+                      type="text"
+                      id="contactName"
+                      name="name"
+                      class="form-input-unique"
+                      placeholder="Your Name"
+                      required
+                    />
+                    <span class="form-error-message-unique"></span>
+                  </div>
+
+                  <div class="form-group-unique">
+                    <label for="contactEmail" class="form-label-unique"
+                      >Email Address</label
+                    >
+                    <input
+                      type="email"
+                      id="contactEmail"
+                      name="email"
+                      class="form-input-unique"
+                      placeholder="your.email@example.com"
+                      required
+                    />
+                    <span class="form-error-message-unique"></span>
+                  </div>
+                </div>
+
+                <div class="form-group-unique">
+                  <label for="contactService" class="form-label-unique"
+                    >Service of Interest</label
+                  >
+                  <div class="select-wrapper-unique">
+                    <select
+                      id="contactService"
+                      name="service"
+                      class="form-input-unique form-select-unique"
+                      required
+                    >
+                      <option value="" disabled selected>
+                        Choose a service...
+                      </option>
+                      <option value="UI/UX Design">UI/UX Design</option>
+                      <option value="Web Development">Web Development</option>
+                      <option value="Brand Identity">Brand Identity</option>
+                      <option value="Webflow Development">
+                        Webflow Development
+                      </option>
+                      <option value="Consulting">Consulting & Strategy</option>
+                      <option value="Other">Other (Please specify)</option>
+                    </select>
+                  </div>
+                  <span class="form-error-message-unique"></span>
+                </div>
+
+                <div class="form-group-unique">
+                  <label for="contactMessage" class="form-label-unique"
+                    >Your Message</label
+                  >
+                  <textarea
+                    id="contactMessage"
+                    name="message"
+                    class="form-input-unique form-textarea-unique"
+                    rows="5"
+                    placeholder="Tell me about your project, goals, timeline, and budget..."
+                    required
+                  ></textarea>
+                  <span class="form-error-message-unique"></span>
+                </div>
+
+                <div class="form-submit-group-unique">
+                  <button type="submit" class="form-submit-button-unique">
+                    Send Inquiry <i class="fas fa-paper-plane"></i>
+                  </button>
+                  <p
+                    id="formStatusMessage"
+                    class="form-status-message-unique"
+                  ></p>
+                </div>
+              </form>
+            </section>
+
+            <div class="social-links">
+              <!-- Update these links to actual profiles -->
+              <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener noreferrer">Behance</a>
+              <a href="#" target="_blank" rel="noopener noreferrer">Github</a>
+            </div>
+          </div>
+        </div>
+        <!-- === Resume Button Section (Place this in your main HTML, e.g., end of #bio) === -->
+        <div
+          class="resume-button-container scroll-reveal"
+          style="margin-top: 40px; text-align: center"
+        >
+          <a href="resume.html" class="btn btn-primary">
+            View Full Resume
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              style="
+                margin-left: 8px;
+                vertical-align: middle;
+                transition: transform 0.3s ease-out;
+              "
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z"
+              />
+            </svg>
+          </a>
+        </div>
+        <!-- === End of Resume Button Section === -->
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <!-- Updated Name and Year -->
+        © <span id="current-year"></span> Monsur Rahman. All Rights Reserved.
+      </footer>
+    </main>
+
+    <!-- Map Modal HTML Removed -->
+
+    <!-- Scripts -->
+    <!-- Removed Mapbox GL JS Script -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.15.0/mapbox-gl.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- Global Settings & Elements ---
+        const preloader = document.getElementById("preloader");
+        const heroContainer = document.querySelector(".container");
+        // Removed Map Modal elements: mapModal, mapTrigger, mapClose
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sections = document.querySelectorAll("main > .content-section"); // Target direct children of main
+        const scrollRevealElements =
+          document.querySelectorAll(".scroll-reveal");
+        // Removed mapInstance variable
+        let ticking = false; // Use single ticking flag for all scroll events
+
+        // --- Preloader ---
+        window.addEventListener("load", function () {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              if (preloader) preloader.classList.add("hidden");
+              requestAnimationFrame(() => {
+                setTimeout(() => {
+                  if (heroContainer) heroContainer.classList.add("loaded");
+                  handleScroll(); // Initial check for navbar state and animations
+                  initParticles();
+                }, 150); // Shorter delay after preloader hides
+              });
+            }, 600); // Shorter preloader display time
+          });
+        });
+
+        // --- Particles JS ---
+        function initParticles() {
+          if (document.getElementById("particles")) {
+            particlesJS("particles", {
+              particles: {
+                number: {
+                  value: 25,
+                  density: { enable: true, value_area: 900 },
+                },
+                color: { value: "#888888" },
+                shape: { type: "circle" },
+                opacity: { value: 0.15, random: true },
+                size: { value: 2.5, random: true },
+                line_linked: {
+                  enable: true,
+                  distance: 160,
+                  color: "#aaaaaa",
+                  opacity: 0.1,
+                  width: 1,
+                },
+                move: {
+                  enable: true,
+                  speed: 0.7,
+                  direction: "none",
+                  random: true,
+                  straight: false,
+                  out_mode: "out",
+                  bounce: false,
+                },
+              },
+              interactivity: {
+                detect_on: "window",
+                events: {
+                  onhover: { enable: true, mode: "grab" },
+                  onclick: { enable: false },
+                  resize: true,
+                },
+                modes: {
+                  grab: { distance: 120, line_linked: { opacity: 0.2 } },
+                },
+              },
+              retina_detect: true,
+            });
+          }
+        }
+
+        // --- Scroll Event Handling (Throttled) ---
+        function handleScroll() {
+          const lastScrollY = window.scrollY;
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateNavbar(lastScrollY);
+              handleParallaxScroll(lastScrollY);
+              // Intersection Observers handle active nav link and scroll reveals
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        // --- Navbar Scroll Update ---
+        function updateNavbar(scrollY) {
+          const navbar = document.querySelector(".navbar");
+          if (navbar) {
+            if (scrollY > 30) {
+              navbar.classList.add("scrolled");
+            } else {
+              navbar.classList.remove("scrolled");
+            }
+          }
+        }
+
+        // --- Active Nav Link Observer ---
+        const navObserverOptions = {
+          root: null,
+          rootMargin: "-40% 0px -60% 0px", // Adjust margins to refine activation point
+          threshold: 0,
+        };
+        const sectionObserver = new IntersectionObserver((entries) => {
+          let intersectedSectionId = null;
+          entries.forEach((entry) => {
+            // Prioritize entries that are fully intersecting or closer to the center
+            if (entry.isIntersecting) {
+              intersectedSectionId = entry.target.getAttribute("id");
+            }
+          });
+
+          if (intersectedSectionId) {
+            navLinks.forEach((link) => {
+              link.classList.remove("active");
+              if (link.getAttribute("href") === `#${intersectedSectionId}`) {
+                link.classList.add("active");
+              }
+            });
+          } else {
+            // If no section is actively intersecting within the rootMargin bounds,
+            // potentially fallback logic or clear active state (optional)
+            // Example: find the section closest to the top edge if none are 'intersecting'
+            // For simplicity, we'll rely on the last intersected one sticking until a new one intersects
+          }
+        }, navObserverOptions);
+
+        sections.forEach((section) => sectionObserver.observe(section));
+
+        // Set initial active link based on hash or first section visibility
+        function setInitialActiveLink() {
+          navLinks.forEach((link) => link.classList.remove("active"));
+          let activeSet = false;
+          if (window.location.hash) {
+            const targetLink = document.querySelector(
+              `.nav-link[href="${window.location.hash}"]`
+            );
+            if (targetLink) {
+              targetLink.classList.add("active");
+              activeSet = true;
+            }
+          }
+          // If no hash or hash link invalid, check first section visibility
+          if (!activeSet) {
+            const firstSection = sections[0];
+            const firstLink = document.querySelector(
+              `.nav-link[href="#${firstSection?.id}"]`
+            );
+            if (firstLink && firstSection) {
+              const rect = firstSection.getBoundingClientRect();
+              // Check if the top of the first section is within the viewport top half
+              if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+                firstLink.classList.add("active");
+              } else {
+                // Fallback to the very first link in the nav if nothing else matches
+                const absoluteFirstLink = document.querySelector(".nav-link");
+                if (absoluteFirstLink)
+                  absoluteFirstLink.classList.add("active");
+              }
+            } else {
+              // Absolute fallback if no sections/links found
+              const absoluteFirstLink = document.querySelector(".nav-link");
+              if (absoluteFirstLink) absoluteFirstLink.classList.add("active");
+            }
+          }
+        }
+        setInitialActiveLink(); // Call on load
+
+        // --- Parallax Effect ---
+        function handleParallaxScroll(scrollPosition) {
+          const profileImage = document.querySelector(".profile-image img");
+          if (
+            profileImage &&
+            heroContainer?.classList.contains("loaded") &&
+            window.innerWidth > 900
+          ) {
+            const translateY = scrollPosition * 0.08; // Keep subtle effect
+            // Apply transform using translate3d for potential performance gain
+            profileImage.style.transform = `translate3d(0, ${translateY}px, 0) scale(1)`;
+            profileImage.style.willChange = "transform"; // Hint browser about changes
+          }
+        }
+
+        // --- Map Functionality Removed ---
+        // Removed initMap function
+        // Removed map event listeners (trigger, close, modal click, keydown)
+
+        // --- Scroll Reveal Observer ---
+        const scrollObserverOptions = {
+          root: null,
+          rootMargin: "0px 0px -15% 0px", // Trigger slightly earlier
+          threshold: 0.01, // Trigger almost immediately
+        };
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              // Optional: Unobserve after reveal
+              // observer.unobserve(entry.target);
+            }
+            // Optional: Reset animation if needed (usually not desired for portfolios)
+            // else { entry.target.classList.remove('is-visible'); }
+          });
+        }, scrollObserverOptions);
+
+        scrollRevealElements.forEach((el) => scrollObserver.observe(el));
+
+        // --- Footer Year ---
+        const yearSpan = document.getElementById("current-year");
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+        // --- Initial Check on Load ---
+        handleScroll(); // Run once to set initial states
+      }); // End DOMContentLoaded
+    </script>
+    <script src="booking.js"></script>
+    <script src="time.js"></script>
+    <script src="tree.js"></script>
+    <script src="hardware.js"></script>
+    <script src="contact.js"></script>
+    <script src="tool.js"></script>
+  </body>
+</html>

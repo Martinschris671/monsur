@@ -1,0 +1,320 @@
+/* --- Assumed Global Portfolio Styles (Minimal for context - YOU HAVE THESE) --- */
+:root {
+  /* ... (Your existing global variables) ... */
+  --global-background-color: #e6e6e6;
+  --global-text-color: #111;
+  --global-text-color-secondary: #555;
+  --global-accent-color: #111;
+  --global-accent-color-rgb: 17, 17, 17;
+  --global-border-color-light: rgba(0, 0, 0, 0.08);
+  --global-transition-timing-smooth: ease-out;
+  --global-container-max-width: 1200px;
+  /* Default global section padding */
+  --global-section-padding-desktop: 100px 40px;
+  --global-section-padding-tablet: 80px 30px;
+  --global-section-padding-mobile: 60px 20px;
+
+  /* NEW: Reduced padding variables specifically for this contact section */
+  --contact-section-padding-desktop: 50px 40px; /* Reduced top/bottom from 100px */
+  --contact-section-padding-tablet: 40px 30px; /* Reduced top/bottom from 80px */
+  --contact-section-padding-mobile: 30px 20px; /* Reduced top/bottom from 60px */
+}
+
+/* General Section Styling - This would be part of your global CSS */
+/* This is a generic wrapper. If #portfolioContactSection IS this wrapper, then the specific styles below will apply */
+.content-section-wrapper {
+  padding: var(--global-section-padding-desktop); /* Default padding */
+  max-width: var(--global-container-max-width);
+  margin: 40px auto; /* Default margin */
+  border-bottom: 1.5px solid var(--border-color-light);
+}
+
+/* --- SPECIFIC STYLING FOR THE CONTACT SECTION'S PADDING AND HEADER --- */
+#portfolioContactSection.content-section-wrapper {
+  /* Apply if #portfolioContactSection is the .content-section-wrapper */
+  padding: var(--contact-section-padding-desktop); /* Use REDUCED padding */
+  margin: 20px auto 40px auto; /* Reduced top margin, kept bottom margin */
+}
+
+#portfolioContactSection .section-title-global {
+  /* Styles for title within THIS section */
+  font-size: clamp(
+    2rem,
+    4.5vw,
+    3rem
+  ); /* Slightly smaller if desired, or keep global */
+  font-weight: 700;
+  color: var(--global-text-color);
+  margin-bottom: 10px; /* Reduced margin below title */
+  text-align: left;
+}
+#portfolioContactSection .section-title-global::after {
+  display: none; /* Remove underline specifically for this section's title */
+}
+
+#portfolioContactSection .section-subtitle-global {
+  /* Styles for subtitle within THIS section */
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem); /* Slightly smaller if desired */
+  font-weight: 400;
+  color: var(--global-text-color-secondary);
+  max-width: 750px;
+  margin-bottom: 35px; /* SIGNIFICANTLY REDUCED margin below subtitle */
+  line-height: 1.65;
+}
+
+/* --- Ultra Clean & Attractive Contact Form (Scoped Styles & Variables for form elements - KEEP AS IS) --- */
+#portfolioContactSection {
+  /* Scoped variables for this specific contact form. */
+  --contact-bg-color: var(--global-background-color);
+  --contact-card-bg: transparent;
+  --contact-text-color: var(--global-text-color);
+  --contact-text-secondary: var(--global-text-color-secondary);
+  --contact-accent-color: var(--global-accent-color);
+  --contact-accent-rgb: var(--global-accent-color-rgb);
+  --contact-border-light: var(--global-border-color-light);
+  --contact-input-placeholder: var(--global-text-color-secondary);
+  --contact-transition: var(--global-transition-timing-smooth);
+}
+
+#portfolioContactSection .contact-form-unique {
+  max-width: 720px;
+  margin: 0 auto;
+  background-color: var(--contact-card-bg);
+  padding: 0;
+}
+
+#portfolioContactSection .form-grid-unique {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+#portfolioContactSection .form-group-unique {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+#portfolioContactSection .form-label-unique {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--contact-text-secondary);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+#portfolioContactSection .form-input-unique,
+#portfolioContactSection .form-textarea-unique {
+  width: 100%;
+  padding: 10px 2px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--contact-text-color);
+  background-color: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--contact-border-light);
+  border-radius: 0;
+  transition: border-color 0.25s var(--contact-transition),
+    box-shadow 0.25s var(--contact-transition);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+#portfolioContactSection .form-input-unique::placeholder,
+#portfolioContactSection .form-textarea-unique::placeholder {
+  color: var(--contact-input-placeholder);
+  opacity: 0.5;
+  font-style: normal;
+}
+
+#portfolioContactSection .form-input-unique:focus,
+#portfolioContactSection .form-textarea-unique:focus {
+  outline: none;
+  border-color: var(--contact-accent-color);
+  box-shadow: 0 2px 8px -3px rgba(var(--contact-accent-rgb), 0.25);
+}
+
+#portfolioContactSection .select-wrapper-unique {
+  position: relative;
+}
+#portfolioContactSection .form-select-unique {
+  padding-right: 25px;
+  cursor: pointer;
+}
+#portfolioContactSection .select-wrapper-unique::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px);
+  right: 3px;
+  transform: translateY(-50%) rotate(45deg);
+  width: 5px;
+  height: 5px;
+  border-bottom: 1.5px solid var(--contact-text-secondary);
+  border-right: 1.5px solid var(--contact-text-secondary);
+  pointer-events: none;
+  transition: border-color 0.2s var(--contact-transition);
+}
+#portfolioContactSection
+  .select-wrapper-unique:has(.form-input-unique:focus)::after {
+  border-color: var(--contact-accent-color);
+}
+#portfolioContactSection
+  .form-input-unique:focus
+  ~ .select-wrapper-unique::after {
+  border-color: var(--contact-accent-color);
+}
+
+#portfolioContactSection .form-textarea-unique {
+  resize: vertical;
+  min-height: 110px;
+}
+
+#portfolioContactSection .form-input-unique.invalid,
+#portfolioContactSection .form-textarea-unique.invalid {
+  border-color: #d9534f;
+  box-shadow: 0 2px 8px -3px rgba(217, 83, 79, 0.25);
+}
+#portfolioContactSection .form-error-message-unique {
+  display: block;
+  font-size: 0.75rem;
+  color: #d9534f;
+  margin-top: 6px;
+  min-height: 1em;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s var(--contact-transition), visibility 0s linear 0.2s;
+}
+#portfolioContactSection
+  .form-group-unique:has(.form-input-unique.invalid)
+  .form-error-message-unique {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+#portfolioContactSection .form-submit-group-unique {
+  margin-top: 35px;
+  text-align: left;
+}
+#portfolioContactSection .form-submit-button-unique {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.25s var(--contact-transition),
+    color 0.25s var(--contact-transition),
+    transform 0.25s var(--contact-transition),
+    box-shadow 0.25s var(--contact-transition);
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  will-change: background-color, color, transform, box-shadow;
+  background-color: var(--contact-text-color);
+  color: var(--global-background-color);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.3px;
+}
+#portfolioContactSection .form-submit-button-unique:hover {
+  background-color: #282828; /* Fallback if lighten not available */
+  color: var(--global-background-color);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px -5px rgba(0, 0, 0, 0.2);
+}
+#portfolioContactSection .form-submit-button-unique i {
+  transition: transform 0.2s var(--contact-transition);
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+#portfolioContactSection .form-submit-button-unique:hover i {
+  transform: translateX(3px);
+}
+
+#portfolioContactSection .form-status-message-unique {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  text-align: left;
+  min-height: 1.5em;
+  color: var(--contact-text-secondary);
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 0.3s var(--contact-transition);
+}
+#portfolioContactSection .form-status-message-unique.visible {
+  opacity: 1;
+}
+#portfolioContactSection .form-status-message-unique.success {
+  color: #27ae60;
+}
+#portfolioContactSection .form-status-message-unique.error {
+  color: #c0392b;
+}
+
+/* Responsive form adjustments */
+@media (max-width: 900px) {
+  /* Tablet */
+  #portfolioContactSection.content-section-wrapper {
+    padding: var(--contact-section-padding-tablet);
+    margin: 15px auto 30px auto; /* Reduced margins for tablet */
+  }
+}
+@media (max-width: 768px) {
+  /* .content-section-wrapper { padding: var(--global-section-padding-tablet); }  Global rule should handle this if it exists */
+  #portfolioContactSection.content-section-wrapper {
+    padding: var(
+      --contact-section-padding-tablet
+    ); /* Ensure specific padding for contact */
+  }
+  #portfolioContactSection .form-grid-unique {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 0;
+  }
+  #portfolioContactSection .form-group-unique {
+    margin-bottom: 25px;
+  }
+  #portfolioContactSection .form-submit-group-unique {
+    text-align: center;
+  }
+  #portfolioContactSection .form-submit-button-unique {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 480px) {
+  /* .content-section-wrapper { padding: var(--global-section-padding-mobile); } Global rule */
+  #portfolioContactSection.content-section-wrapper {
+    padding: var(
+      --contact-section-padding-mobile
+    ); /* Ensure specific padding for contact */
+    margin: 10px auto 20px auto; /* Further reduced margins for mobile */
+  }
+  #portfolioContactSection .form-label-unique {
+    font-size: 0.75rem;
+  }
+  #portfolioContactSection .form-input-unique,
+  #portfolioContactSection .form-textarea-unique {
+    font-size: 0.9rem;
+  }
+}
+
+/* Scroll Reveal */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--global-transition-timing-smooth),
+    transform 0.5s var(--global-transition-timing-smooth);
+  transition-delay: 0.1s;
+  will-change: opacity, transform;
+}
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

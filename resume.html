@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume | Monsur Rahman</title>
+    <style>
+      /* --- Replicate Core Theme Variables --- */
+      :root {
+        --transition-timing-fast: cubic-bezier(0.25, 0.8, 0.25, 1);
+        --transition-timing-smooth: ease-out;
+        --background-color: #e6e6e6;
+        --text-color: #111;
+        --container-max-width: 960px; /* Slightly narrower for resume */
+        --subtle-border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        color: var(--text-color);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        line-height: 1.7; /* Slightly increased line-height for readability */
+      }
+
+      /* --- Resume Container --- */
+      .resume-container {
+        margin: 0 auto;
+        background-color: #ffffff; /* White background for resume paper feel */
+        padding: 50px 60px;
+
+        position: relative; /* For download button positioning */
+      }
+
+      /* --- Download Button --- */
+      .download-button-wrapper {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+      }
+
+      .btn {
+        display: inline-flex; /* Use flex for icon alignment */
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s var(--transition-timing-smooth),
+          color 0.3s var(--transition-timing-smooth),
+          transform 0.3s var(--transition-timing-smooth),
+          box-shadow 0.3s var(--transition-timing-smooth);
+        cursor: pointer;
+        border: 1px solid transparent;
+        will-change: background-color, color, transform, box-shadow;
+      }
+
+      .btn-secondary {
+        background-color: #f0f0f0;
+        color: var(--text-color);
+        border-color: #ddd;
+      }
+
+      .btn-secondary:hover {
+        background-color: #e0e0e0;
+        border-color: #ccc;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      /* --- Resume Header --- */
+      .resume-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid var(--subtle-border-color);
+      }
+
+      .resume-header h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        line-height: 1.2;
+        color: var(--text-color);
+      }
+
+      .resume-header .job-title {
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 25px; /* Row and column gap */
+        font-size: 0.95rem;
+        color: #444;
+      }
+
+      .contact-info span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .contact-info a {
+        color: var(--text-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .contact-info a:hover {
+        color: #007bff; /* A subtle accent color */
+      }
+
+      /* --- Resume Sections --- */
+      .resume-section {
+        margin-bottom: 40px;
+      }
+
+      .resume-section h2 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 25px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--text-color);
+        display: inline-block; /* Make border fit content */
+      }
+
+      /* Experience & Education Items */
+      .resume-item {
+        margin-bottom: 30px;
+      }
+      .resume-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .resume-item h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 3px;
+        color: var(--text-color);
+      }
+
+      .item-meta {
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 10px;
+      }
+      .item-meta .company,
+      .item-meta .institution {
+        font-weight: 500;
+      }
+      .item-meta .date {
+        font-style: italic;
+        margin-left: 10px; /* Space between location/company and date */
+      }
+
+      .resume-item p,
+      .resume-item ul {
+        font-size: 1rem;
+        color: #333;
+      }
+
+      .resume-item ul {
+        list-style: disc;
+        padding-left: 20px;
+        margin-top: 8px;
+      }
+      .resume-item ul li {
+        margin-bottom: 5px;
+      }
+
+      /* Skills Section */
+      .skills-list {
+        list-style: none;
+        padding-left: 0;
+        column-count: 2; /* Display skills in columns */
+        column-gap: 40px;
+      }
+
+      .skills-list li {
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+      .skills-list strong {
+        /* Skill category */
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        margin-top: 10px; /* Space before new category */
+        font-size: 1.05rem;
+      }
+      .skills-list li:first-child strong {
+        margin-top: 0;
+      }
+
+      /* --- Responsive --- */
+      @media (max-width: 768px) {
+        body {
+          padding: 20px 10px;
+        }
+        .resume-container {
+          padding: 30px 25px;
+        }
+        .download-button-wrapper {
+          position: static; /* Make button part of flow */
+          text-align: center;
+          margin-bottom: 30px; /* Space below button */
+        }
+        .resume-header h1 {
+          font-size: 2.2rem;
+        }
+        .resume-header .job-title {
+          font-size: 1.1rem;
+        }
+        .contact-info {
+          justify-content: center;
+          gap: 8px 15px;
+          font-size: 0.9rem;
+        }
+        .resume-section h2 {
+          font-size: 1.4rem;
+          margin-bottom: 20px;
+        }
+        .resume-item h3 {
+          font-size: 1.1rem;
+        }
+        .item-meta {
+          font-size: 0.9rem;
+        }
+        .skills-list {
+          column-count: 1;
+        } /* Single column for skills */
+      }
+
+      @media (max-width: 480px) {
+        .resume-container {
+          padding: 25px 15px;
+        }
+        .resume-header h1 {
+          font-size: 1.9rem;
+        }
+        .contact-info {
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+        }
+        .item-meta .date {
+          display: block;
+          margin-left: 0;
+          margin-top: 3px;
+        }
+        .skills-list li {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="resume-container">
+      <!-- Download Button -->
+      <div class="download-button-wrapper">
+        <!-- IMPORTANT: Replace 'path/to/your/resume.pdf' with the ACTUAL path to your resume file -->
+        <a
+          href="path/to/your/resume.pdf"
+          class="btn btn-secondary"
+          id="download-link"
+          download
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+            />
+            <path
+              d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+            />
+          </svg>
+          Download PDF
+        </a>
+      </div>
+
+      <!-- Header -->
+      <header class="resume-header">
+        <h1>Monsur Rahman</h1>
+        <div class="job-title">Freelance Designer & Developer</div>
+        <div class="contact-info">
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
+              />
+            </svg>
+            Dhaka, Bangladesh
+          </span>
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"
+              />
+            </svg>
+            <a href="mailto:monsurrahman671@gmail.com"
+              >hello@monsurrahman.dev</a
+            >
+          </span>
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M10.061 13.5 3.5 6.939 1 10.439V14a1 1 0 0 0 1 1h3.561l6.061-6.061zM13.5 10.061 6.939 3.5 10.439 1H14a1 1 0 0 1 1 1v3.561zM0 0h16v16H0z"
+                fill="none"
+              />
+              <path d="M0 0h16v16H0z" fill="none" />
+              <path
+                fill-rule="evenodd"
+                d="M15.354 2.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L14.293 3H11.5a.5.5 0 0 1 0-1H15a.5.5 0 0 1 .5.5v3.5a.5.5 0 0 1-1 0V3.707l-3.146 3.147a.5.5 0 1 1-.708-.708l3-3z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11A1.5 1.5 0 0 0 15 13.5V8.5a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H6a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+              />
+            </svg>
+            <a href="home.html" target="_blank" rel="noopener noreferrer"
+              >homepage</a
+            >
+            <!-- Add your actual website -->
+          </span>
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+              />
+            </svg>
+            <a href="#" target="_blank" rel="noopener noreferrer">github.com</a>
+            <!-- Add your GitHub -->
+          </span>
+        </div>
+      </header>
+
+      <!-- Summary/Objective Section -->
+      <section class="resume-section">
+        <h2>Summary</h2>
+        <p>
+          Highly motivated and results-oriented Designer & Developer with 8+
+          years of experience crafting engaging and user-centric digital
+          experiences. Proven ability to translate complex requirements into
+          intuitive interfaces and robust, scalable code. Passionate about clean
+          design, front-end performance, and collaborating effectively to bring
+          innovative ideas to life. Seeking challenging freelance projects where
+          I can leverage my skills in UI/UX, development, and problem-solving.
+        </p>
+      </section>
+
+      <!-- Experience Section -->
+      <section class="resume-section">
+        <h2>Experience</h2>
+        <div class="resume-item">
+          <h3>Freelance Designer & Developer</h3>
+          <div class="item-meta">
+            <span class="company">Self-Employed</span> |
+            <span class="location">Remote / Dhaka, Bangladesh</span>
+            <span class="date">Jan 2018 – Present</span>
+          </div>
+          <ul>
+            <li>
+              Designed and developed responsive websites and web applications
+              for diverse clients across various industries.
+            </li>
+            <li>
+              Led UI/UX design processes, including wireframing, prototyping,
+              user testing, and final visual design.
+            </li>
+            <li>
+              Implemented front-end solutions using React, Vue.js, and modern
+              CSS frameworks (Tailwind, Bootstrap).
+            </li>
+            <li>
+              Developed back-end systems and APIs using Node.js, Express, and
+              managed databases (MongoDB, PostgreSQL).
+            </li>
+            <li>
+              Collaborated closely with clients to define project scope, gather
+              requirements, and ensure successful project delivery.
+            </li>
+            <li>
+              Optimized web performance, accessibility, and SEO for client
+              projects.
+            </li>
+          </ul>
+        </div>
+        <div class="resume-item">
+          <h3>Web Developer</h3>
+          <div class="item-meta">
+            <span class="company">Tech Solutions Ltd.</span> |
+            <span class="location">Dhaka, Bangladesh</span>
+            <span class="date">Jun 2015 – Dec 2017</span>
+          </div>
+          <ul>
+            <li>
+              Contributed to the development of large-scale web applications
+              using PHP (Laravel) and JavaScript (jQuery, Vanilla JS).
+            </li>
+            <li>
+              Worked within an Agile team environment, participating in sprints,
+              code reviews, and daily stand-ups.
+            </li>
+            <li>
+              Translated design mockups into pixel-perfect, functional HTML,
+              CSS, and JavaScript components.
+            </li>
+            <li>
+              Maintained and improved existing codebase, focusing on bug fixing
+              and performance enhancements.
+            </li>
+          </ul>
+        </div>
+        <!-- Add more experience items if needed -->
+      </section>
+
+      <!-- Education Section -->
+      <section class="resume-section">
+        <h2>Education</h2>
+        <div class="resume-item">
+          <h3>B.Sc. in Computer Science & Engineering</h3>
+          <div class="item-meta">
+            <span class="institution">Leading University Name</span> |
+            <span class="location">Dhaka, Bangladesh</span>
+            <!-- Replace with actual University -->
+            <span class="date">Graduated May 2015</span>
+          </div>
+          <p>
+            Relevant Coursework: Data Structures, Algorithms, Web Technologies,
+            Database Management, Software Engineering Principles.
+          </p>
+        </div>
+        <!-- Add relevant certifications or other degrees -->
+        <div class="resume-item">
+          <h3>Certified Web Professional - Design</h3>
+          <div class="item-meta">
+            <span class="institution">Online Certification Body</span>
+            <!-- e.g., Coursera, Udemy, etc. -->
+            <span class="date">Completed 2019</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="resume-section">
+        <h2>Skills</h2>
+        <ul class="skills-list">
+          <li>
+            <strong>UI/UX Design:</strong> Figma, Adobe XD, Sketch, Wireframing,
+            Prototyping, User Research, Usability Testing, Design Systems
+          </li>
+          <li>
+            <strong>Front-End:</strong> HTML5, CSS3 (Sass/LESS), JavaScript
+            (ES6+), React, Vue.js, Next.js, Tailwind CSS, Bootstrap, Webpack,
+            Vite
+          </li>
+          <li>
+            <strong>Back-End:</strong> Node.js, Express.js, Python (Django/Flask
+            - *optional*), REST APIs, GraphQL
+          </li>
+          <li><strong>Databases:</strong> MongoDB, PostgreSQL, MySQL</li>
+          <li>
+            <strong>CMS/Platforms:</strong> WordPress, Webflow (*optional*)
+          </li>
+          <li><strong>Tools:</strong> Git, Docker, Jira, Asana, VS Code</li>
+          <li>
+            <strong>Languages:</strong> Bengali (Native), English (Fluent)
+          </li>
+          <li>
+            <strong>Methodologies:</strong> Agile/Scrum, Responsive Design,
+            Mobile-First Development
+          </li>
+        </ul>
+      </section>
+
+      <!-- Optional: Awards/Recognition Section -->
+
+      <section class="resume-section">
+        <h2>Awards & Recognition</h2>
+        <div class="resume-item">
+          <h3>Awesome Web Award</h3>
+          <div class="item-meta">
+            <span class="institution">Web Awards Org</span>
+            <span class="date">2022</span>
+          </div>
+          <p>
+            Recognition for outstanding design and development on Project Aura.
+          </p>
+        </div>
+      </section>
+    </div>
+    <!-- /.resume-container -->
+
+    <script>
+      // --- Dynamic Download Filename ---
+      document.addEventListener("DOMContentLoaded", function () {
+        const downloadLink = document.getElementById("download-link");
+        if (downloadLink) {
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+          const day = String(today.getDate()).padStart(2, "0");
+
+          // Set a dynamic suggested filename
+          const suggestedFilename = `Monsur_Rahman_Resume_${year}-${month}-${day}.pdf`;
+          downloadLink.setAttribute("download", suggestedFilename);
+        }
+      });
+    </script>
+  </body>
+</html>

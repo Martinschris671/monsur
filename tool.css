@@ -1,0 +1,381 @@
+/* --- YOUR PORTFOLIO'S GLOBAL STYLES (ADAPT OR ENSURE COMPATIBILITY) --- */
+:root {
+  --transition-timing-fast: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-timing-smooth: ease-out;
+  --background-color: #e6e6e6; /* Main page background from your theme */
+  --card-background-color: #ffffff; /* Card/Modal background */
+  --text-color: #111; /* Primary text color from your theme */
+  --text-color-secondary: #555; /* Secondary text color from your theme */
+  --accent-color: #111; /* Accent color, e.g., for buttons, links - default to text-color */
+  --border-color-light: rgba(
+    0,
+    0,
+    0,
+    0.08
+  ); /* Light border color from your theme */
+  --card-hover-background-color: #f0f0f0; /* Hover BG for cards from your theme */
+  --shadow-color-subtle: rgba(0, 0, 0, 0.05);
+  --shadow-color-medium: rgba(0, 0, 0, 0.08);
+  --container-max-width: 1200px; /* Max width for content sections */
+  --section-padding-desktop: 70px 40px;
+  --section-padding-tablet: 80px 30px; /* Added for consistency */
+  --section-padding-mobile: 60px 20px;
+}
+
+/* --- "My Setup / Tools I Love" Section --- */
+.tech-stack-section {
+  padding: var(--section-padding-desktop);
+  max-width: var(--container-max-width, 1200px); /* Use your container width */
+  margin: 0 auto;
+}
+
+.tech-stack-section .section-title {
+  /* Re-use your .section-title style */
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 20px; /* Adjusted from 40px for tighter feel */
+  line-height: 1.2;
+  text-align: left; /* Or center, depending on your preference */
+}
+
+.tech-stack-section .section-subtitle {
+  /* Re-use your .section-subtitle style */
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 400;
+  color: var(--text-color-secondary);
+  max-width: 700px;
+  margin-bottom: 60px;
+}
+
+.tool-category {
+  margin-bottom: 0px;
+}
+.tool-category-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 30px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--border-color-light);
+  display: flex;
+  align-items: center;
+}
+.tool-category-title .fa-icon {
+  margin-right: 15px;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(260px, 1fr)
+  ); /* Slightly larger min card width */
+  gap: 1px;
+  background-color: var(--border-color-light);
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px; /* Rounded corners for the grid container */
+  overflow: hidden;
+}
+
+.tool-card {
+  background-color: var(--card-background-color);
+  padding: 25px; /* Adjusted padding */
+  transition: background-color 0.3s var(--transition-timing-smooth),
+    transform 0.3s var(--transition-timing-smooth),
+    box-shadow 0.3s var(--transition-timing-smooth);
+  cursor: pointer;
+  text-align: left;
+  will-change: background-color, transform, box-shadow;
+  position: relative;
+}
+.tool-card:hover {
+  background-color: var(--card-hover-background-color);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px var(--shadow-color-medium);
+}
+
+.tool-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px; /* Space between header and any potential short desc on card */
+}
+.tool-card-logo {
+  width: 44px; /* Slightly adjusted */
+  height: 44px;
+  margin-right: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color); /* Match page bg for consistency */
+  border-radius: 8px; /* Softer radius */
+  padding: 7px;
+  border: 1px solid var(--border-color-light);
+}
+.tool-card-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.tool-card-info h4 {
+  font-size: 1.15rem; /* Slightly larger */
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-color);
+  line-height: 1.3;
+}
+.tool-card-info p {
+  font-size: 0.9rem;
+  color: var(--text-color-secondary);
+  margin: 3px 0 0 0;
+  line-height: 1.4;
+}
+
+/* --- Tool Modal Styles - Ultra Clean & Realistic (REVISED) --- */
+.tool-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 30, 40, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  padding: 20px;
+  transition: opacity 0.3s var(--transition-timing-fast),
+    visibility 0s linear 0.3s;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.tool-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.tool-modal {
+  background-color: var(--card-background-color, #fff);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.35),
+    0 8px 20px -8px rgba(0, 0, 0, 0.15);
+  max-width: 680px;
+  width: 95%;
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.35s var(--transition-timing-smooth) 0.05s,
+    opacity 0.35s var(--transition-timing-smooth) 0.05s;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+.tool-modal-overlay.active .tool-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.tool-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-color-secondary, #777);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.2s var(--transition-timing-smooth),
+    color 0.2s var(--transition-timing-smooth),
+    transform 0.2s var(--transition-timing-smooth);
+  z-index: 10;
+}
+.tool-modal-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--text-color, #111);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.tool-modal-content-wrapper {
+  padding: 35px 40px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.tool-modal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.tool-modal-logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+  flex-shrink: 0;
+  background-color: var(--background-color, #f0f0f0);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color-light, #eee);
+}
+.tool-modal-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.tool-modal-title-group h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-color, #111);
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+.tool-modal-title-group p {
+  font-size: 1rem;
+  color: var(--text-color-secondary, #555);
+  line-height: 1.4;
+}
+
+.tool-modal-body {
+  padding-top: 0;
+} /* Removed padding-top as header no longer has border */
+.tool-modal-body p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  color: var(--text-color, #333);
+}
+.tool-modal-body p:last-child {
+  margin-bottom: 0;
+}
+.tool-modal-body strong {
+  font-weight: 600;
+  color: var(--accent-color, #111);
+}
+
+.tool-modal-footer {
+  padding: 20px 40px 25px;
+  border-top: 1px solid var(--border-color-light, #eee);
+  margin-top: auto; /* Pushes footer to bottom if content is short */
+  text-align: right;
+}
+.tool-modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  background-color: var(--accent-color, #111);
+  color: var(
+    --background-color,
+    #fff
+  ); /* Text color that contrasts with accent */
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background-color 0.25s var(--transition-timing-smooth),
+    transform 0.25s var(--transition-timing-smooth),
+    box-shadow 0.25s var(--transition-timing-smooth);
+  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.15);
+}
+.tool-modal-link:hover {
+  background-color: #333; /* Example darken, adjust based on your accent */
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 15px -3px rgba(0, 0, 0, 0.2);
+}
+.tool-modal-link .fa-xs {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  /* Tablet */
+  .tech-stack-section {
+    padding: var(--section-padding-tablet);
+  }
+  .tools-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile */
+  .tech-stack-section {
+    padding: var(--section-padding-mobile);
+  }
+  .tools-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+  }
+  .tool-card {
+    padding: 20px 18px;
+  }
+  .tool-card-logo {
+    width: 38px;
+    height: 38px;
+    margin-right: 12px;
+    padding: 6px;
+  }
+  .tool-card-info h4 {
+    font-size: 1.05rem;
+  }
+  .tool-card-info p {
+    font-size: 0.85rem;
+  }
+
+  .tool-modal-content-wrapper {
+    padding: 30px 25px;
+  }
+  .tool-modal-header {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .tool-modal-logo {
+    margin-right: 0;
+    margin-bottom: 15px;
+    width: 50px;
+    height: 50px;
+  }
+  .tool-modal-title-group h3 {
+    font-size: 1.6rem;
+  }
+  .tool-modal-footer {
+    padding: 15px 25px 20px;
+    text-align: center;
+  }
+  .tool-modal-link {
+    width: 100%;
+    justify-content: center;
+  } /* Full width button on mobile */
+}
+@media (max-width: 480px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+  .tool-category-title {
+    font-size: 1.5rem;
+  }
+  .tool-modal-title-group h3 {
+    font-size: 1.4rem;
+  }
+  .tool-modal-body p {
+    font-size: 1rem;
+  }
+}

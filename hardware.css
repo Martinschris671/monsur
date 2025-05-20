@@ -1,0 +1,404 @@
+/* --- Hardware Setup Category (Revised Card UI) --- */
+.hardware-setup-category {
+  margin-bottom: 7px;
+}
+.hardware-setup-category .tool-category-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--border-color-light);
+  display: flex;
+  align-items: center;
+}
+.hardware-setup-category .tool-category-title .fa-icon {
+  margin-right: 15px;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+.hardware-setup-category .category-description {
+  font-size: 1.05rem;
+  color: var(--text-color-secondary);
+  margin-top: -10px;
+  margin-bottom: 40px;
+  max-width: 750px;
+  line-height: 1.7;
+}
+
+.hardware-grid {
+  display: grid;
+  /* Match your existing .services-grid or .work-grid if possible */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px; /* For the thin line effect between cards */
+  background-color: var(
+    --border-color-light
+  ); /* This color forms the "lines" */
+  border: 1px solid var(--border-color-light);
+  border-radius: 6px; /* Subtle rounding for the grid container */
+  overflow: hidden;
+}
+
+.hardware-card-refined {
+  background-color: var(--card-background-color);
+  padding: 30px; /* Consistent padding */
+  display: flex;
+  flex-direction: column; /* Stack image and info */
+  cursor: pointer;
+  transition: background-color 0.3s var(--transition-timing-smooth),
+    transform 0.3s var(--transition-timing-smooth),
+    box-shadow 0.3s var(--transition-timing-smooth);
+  will-change: background-color, transform, box-shadow;
+  /* No individual card border if grid provides lines, or add: border: 1px solid transparent; */
+}
+.hardware-card-refined:hover {
+  background-color: var(
+    --card-hover-background-color
+  ); /* Your site's hover color */
+  transform: translateY(-5px); /* Your site's hover lift */
+  /* Use a shadow consistent with your site's hover states, if any */
+  box-shadow: 0 6px 15px var(--shadow-color-medium);
+}
+
+.hardware-card-refined .image-container {
+  /* New container for image + shine */
+  width: 100%;
+  height: 200px; /* Or aspect-ratio: 16/10; */
+  margin-bottom: 20px;
+  border-radius: 6px; /* Rounded corners for the image area */
+  overflow: hidden; /* Crucial for shine and image fit */
+  position: relative; /* For positioning shine overlay */
+  background-color: #f0f2f5; /* A neutral bg for the image container */
+}
+.hardware-card-refined .hardware-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 'contain' is usually best for product shots */
+  padding: 15px; /* Padding around the image within its container */
+  transition: transform 0.3s var(--transition-timing-smooth);
+}
+.hardware-card-refined:hover .hardware-image {
+  transform: scale(1.05); /* Subtle zoom on card hover */
+}
+
+.hardware-shine-overlay {
+  /* Same shine effect, applied to .image-container */
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.03) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: left 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.1s,
+    opacity 0.4s ease 0.1s;
+}
+.hardware-card-refined:hover .hardware-shine-overlay {
+  left: 35%;
+  opacity: 1;
+}
+
+.hardware-card-refined .info-container h4 {
+  font-size: 1.3rem; /* Match your .service-item h3 or similar */
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+.hardware-card-refined .info-container p {
+  font-size: 0.95rem; /* Match your .service-item p or similar */
+  color: var(--text-color-secondary);
+  line-height: 1.5;
+}
+
+/* --- Tool Modal Styles - Ultra Clean & Realistic (KEEPING THIS FROM PREVIOUS) --- */
+.tool-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 30, 40, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  padding: 20px;
+  transition: opacity 0.3s var(--transition-timing-fast),
+    visibility 0s linear 0.3s;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.tool-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.tool-modal {
+  background-color: var(--card-background-color, #fff);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.35),
+    0 8px 20px -8px rgba(0, 0, 0, 0.15);
+  max-width: 700px;
+  width: 95%;
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.35s var(--transition-timing-smooth) 0.05s,
+    opacity 0.35s var(--transition-timing-smooth) 0.05s;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+.tool-modal-overlay.active .tool-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.tool-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-color-secondary, #777);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.2s var(--transition-timing-smooth),
+    color 0.2s var(--transition-timing-smooth),
+    transform 0.2s var(--transition-timing-smooth);
+  z-index: 10;
+}
+.tool-modal-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--text-color, #111);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.tool-modal-content-wrapper {
+  padding: 35px 40px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.tool-modal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.tool-modal-logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+  flex-shrink: 0;
+  background-color: var(--background-color, #f0f0f0);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color-light, #eee);
+}
+.tool-modal-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.tool-modal-title-group h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-color, #111);
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+.tool-modal-title-group p {
+  font-size: 1rem;
+  color: var(--text-color-secondary, #555);
+  line-height: 1.4;
+}
+
+.tool-modal-body {
+  padding-top: 0;
+}
+.tool-modal-body p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  color: var(--text-color, #333);
+}
+.tool-modal-body p:last-child {
+  margin-bottom: 0;
+}
+.tool-modal-body strong {
+  font-weight: 600;
+  color: var(--accent-color, #111);
+}
+
+.tool-modal-body .specs-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-top: 25px;
+  margin-bottom: 10px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color-light);
+}
+.tool-modal-body .specs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+.tool-modal-body .specs-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+}
+.tool-modal-body .specs-list li:last-child {
+  border-bottom: none;
+}
+.tool-modal-body .specs-list .spec-label {
+  color: var(--text-color-secondary);
+  font-weight: 500;
+  padding-right: 10px;
+}
+.tool-modal-body .specs-list .spec-value {
+  color: var(--text-color);
+  font-weight: 500;
+  text-align: right;
+}
+
+.tool-modal-footer {
+  padding: 20px 40px 25px;
+  border-top: 1px solid var(--border-color-light, #eee);
+  margin-top: auto;
+  text-align: right;
+}
+.tool-modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  background-color: var(--accent-color, #111);
+  color: var(--background-color, #fff);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background-color 0.25s var(--transition-timing-smooth),
+    transform 0.25s var(--transition-timing-smooth),
+    box-shadow 0.25s var(--transition-timing-smooth);
+  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.15);
+}
+.tool-modal-link:hover {
+  background-color: #333;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 15px -3px rgba(0, 0, 0, 0.2);
+}
+.tool-modal-link .fa-xs {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments for cards & modal */
+@media (max-width: 900px) {
+  /* Tablet */
+  .content-section {
+    padding: var(--section-padding-tablet);
+  }
+  .hardware-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  } /* Adjusted minmax */
+}
+
+@media (max-width: 768px) {
+  /* Mobile */
+  .content-section {
+    padding: var(--section-padding-mobile);
+  }
+  .hardware-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  } /* Allow slightly wider cards if they stack */
+  .hardware-card-refined {
+    padding: 25px;
+  }
+  .hardware-card-refined .image-container {
+    height: 180px;
+    margin-bottom: 15px;
+  }
+  .hardware-card-refined .info-container h4 {
+    font-size: 1.15rem;
+  }
+
+  .tool-modal-content-wrapper {
+    padding: 30px 20px;
+  } /* Less horizontal padding */
+  .tool-modal-header {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .tool-modal-logo {
+    margin-right: 0;
+    margin-bottom: 15px;
+    width: 50px;
+    height: 50px;
+  }
+  .tool-modal-title-group h3 {
+    font-size: 1.6rem;
+  }
+  .tool-modal-footer {
+    padding: 15px 20px 20px;
+    text-align: center;
+  }
+  .tool-modal-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 480px) {
+  .hardware-grid {
+    grid-template-columns: 1fr;
+  } /* Single column */
+  .hardware-setup-category .tool-category-title {
+    font-size: 1.6rem;
+  }
+  .hardware-card-refined .info-container h4 {
+    font-size: 1.1rem;
+  }
+
+  .tool-modal-title-group h3 {
+    font-size: 1.5rem;
+  }
+  .tool-modal-body p {
+    font-size: 1rem;
+  }
+  .tool-modal-body .specs-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tool-modal-body .specs-list .spec-value {
+    text-align: left;
+    margin-top: 2px;
+  }
+}
