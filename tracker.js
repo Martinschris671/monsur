@@ -1,35 +1,71 @@
 // tracker.js
 (function () {
-  "use strict"; // Enforce stricter parsing and error handling
+  "use strict";
 
-  // --- Your Deployed Google Apps Script Web App URL ---
   const GAS_WEB_APP_URL =
     "https://script.google.com/macros/s/AKfycbxf_NSC_gXp0mnbFDO7l_8rkGN3BD44hCxaSSIkbYpfyZ5ZXARMy9sR7lJxS3cqwpzPZg/exec";
 
-  // Function to log the visit
-  function logVisit() {
-    // Only log visit if not from localhost or a known dev environment
-    // and if GAS_WEB_APP_URL is correctly set (it is, as we just pasted it)
+  async function logVisit() {
     if (
-      window.location.hostname !== "localhost" &&
-      window.location.hostname !== "127.0.0.1"
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
     ) {
-      fetch(GAS_WEB_APP_URL, {
-        method: "POST",
-        mode: "no-cors", // We don't need to read the response for a simple increment
-        // No body or headers needed for this simple POST to the specific GAS doPost
-      })
-        .then(() => {
-          console.log("Visit ping sent to analytics.");
-        })
-        .catch((error) => {
-          console.error("Error pinging analytics:", error);
-        });
-    } else {
       console.log("Analytics ping skipped for local development.");
+      return;
+    }
+
+    let ipAddress = "N/A";
+    try {
+      const ipResponse = await fetch("https://api.ipify.org?format=json");
+      if (ipResponse.ok) {
+        const ipData = await ipResponse.json();
+        ipAddress = ipData.ip;
+      } else {
+        console.warn("Could not fetch IP address:", ipResponse.status);
+      }
+    } catch (error) {
+      console.warn("Error fetching IP address:", error);
+    }
+
+    const visitData = {
+      ipAddress: ipAddress,
+      pageURL: window.location.href,
+      userAgent: navigator.userAgent,
+      referrer: document.referrer || "Direct",
+    };
+
+    try {
+      const response = await fetch(GAS_WEB_APP_URL, {
+        method: "POST",
+        mode: "cors", // Required for sending JSON and reading response
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(visitData),
+        // redirect: 'follow' // Optional, GAS usually handles redirects internally
+      });
+
+      if (response.ok) {
+        // const result = await response.json(); // If you need to read response
+        // console.log('Analytics ping successful:', result);
+        console.log("Analytics ping sent.");
+      } else {
+        console.error(
+          "Analytics ping failed:",
+          response.status,
+          await response.text()
+        );
+      }
+    } catch (error) {
+      console.error("Error pinging analytics:", error);
     }
   }
 
-  // Execute the logVisit function when the script loads
-  logVisit();
+  // Debounce or ensure it runs only once per page load effectively
+  if (document.readyState === "complete") {
+    logVisit();
+  } else {
+    window.addEventListener("load", logVisit, { once: true });
+  }
 })();
